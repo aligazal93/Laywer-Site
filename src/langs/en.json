@@ -1,0 +1,14 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About",
+        "articles": "Articles",
+        "contact": "Contact",
+        "book": "Book Consultation",
+        "language": "العربية"
+    },
+    "hero": {
+        "title": "Ali Saeed Al Shamsi",
+        "subtitle": "Your legal partner in making confident decisions."
+    }
+}

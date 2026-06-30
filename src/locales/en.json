@@ -1,0 +1,20 @@
+{
+  "header": {
+    "nav": {
+      "contact": "Contact",
+      "articles": "Articles",
+      "about": "About",
+      "home": "Home"
+    },
+    "cta": "Book Your Consultation Now",
+    "logo": "Logo"
+  },
+  "intro": {
+    "badge": "Lawyer and Legal Consultant",
+    "title": "Ali Saeed Al Shamsi",
+    "subtitle": "Your legal partner in making confident decisions.",
+    "description": "I work with individuals, entrepreneurs, and companies to provide clear legal solutions, well-thought-out strategies, and consultations built on knowledge, experience, and professional commitment.",
+    "ctaBook": "Book Your Consultation Now",
+    "ctaAbout": "Get to Know Me"
+  }
+}
