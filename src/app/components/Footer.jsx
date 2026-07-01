@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { FaSnapchat } from "react-icons/fa";
@@ -8,7 +9,8 @@ import {
   FaTiktok,
 } from "react-icons/fa6";
 
-import { SiSnapchat } from "react-icons/si";
+import { FaWhatsapp } from "react-icons/fa";
+import { useState } from "react";
 
 const socialLinks = [
   { icon: FaFacebookF, href: "#" },
@@ -27,6 +29,7 @@ const footerLinks = [
 
 export default function Footer({ locale }) {
   const isArabic = locale === "ar";
+  const [open, setOpen] = useState(false);
 
   return (
     <footer className="relative bg-[#00091F] mt-[0px] pt-[200px] text-white">
@@ -59,7 +62,9 @@ export default function Footer({ locale }) {
           </h2>
 
           <p className="mx-auto mb-4 max-w-[620px] text-custom16 leading-8 text-white/85">
-إذا كنت تبحث عن استشارة قانونية تعتمد على الفهم الدقيق، والرؤية الواضحة، والالتزام المهني، يمكنك حجز موعد لبدء مناقشة حالتك والحصول على التوجيه القانوني المناسب.
+            إذا كنت تبحث عن استشارة قانونية تعتمد على الفهم الدقيق، والرؤية
+            الواضحة، والالتزام المهني، يمكنك حجز موعد لبدء مناقشة حالتك والحصول
+            على التوجيه القانوني المناسب.
           </p>
 
           <Link
@@ -108,7 +113,7 @@ export default function Footer({ locale }) {
 
           {/* Customer Service */}
           <div className="text-center lg:text-right">
-           <h3 className="mb-4 text-custom16 font-bold text-secondary">
+            <h3 className="mb-4 text-custom16 font-bold text-secondary">
               خدمة العملاء
             </h3>
 
@@ -135,14 +140,40 @@ export default function Footer({ locale }) {
 
           {/* Contact */}
           <div className="text-center lg:text-start">
-           <h3 className="mb-4 text-custom16 font-bold text-secondary">
+            <h3 className="mb-4 text-custom16 font-bold text-secondary">
               تواصل معنا
             </h3>
 
             <ul className="space-y-3 text-custom14 text-white/90">
-              <li className="flex items-center lg:justify-start justify-center gap-2"><Image src="/images/f-1.png" alt="phone" width={20} height={20} /> 01036182516 </li>
-              <li className="flex items-center  lg:justify-start justify-center gap-2"> <Image src="/images/f-2.png" alt="phone" width={20} height={20} /> info@Globalinx.com</li>
-              <li className="flex items-center  lg:justify-start justify-center gap-2"> <Image src="/images/f-3.png" alt="phone" width={20} height={20} /> الحي الدولي العاشر بجوار كارفور المعادي</li>
+              <li className="flex items-center lg:justify-start justify-center gap-2">
+                <Image
+                  src="/images/f-1.png"
+                  alt="phone"
+                  width={20}
+                  height={20}
+                />{" "}
+                01036182516{" "}
+              </li>
+              <li className="flex items-center  lg:justify-start justify-center gap-2">
+                {" "}
+                <Image
+                  src="/images/f-2.png"
+                  alt="phone"
+                  width={20}
+                  height={20}
+                />{" "}
+                info@Globalinx.com
+              </li>
+              <li className="flex items-center  lg:justify-start justify-center gap-2">
+                {" "}
+                <Image
+                  src="/images/f-3.png"
+                  alt="phone"
+                  width={20}
+                  height={20}
+                />{" "}
+                الحي الدولي العاشر بجوار كارفور المعادي
+              </li>
             </ul>
 
             <h3 className="mb-4 mt-6 text-custom14 font-bold text-secondary">
@@ -162,6 +193,59 @@ export default function Footer({ locale }) {
             </div>
           </div>
         </div>
+
+        <div
+          className={`fixed bottom-6 z-[999] flex flex-col gap-3 ${
+            isArabic ? "right-6" : "left-6"
+          }`}
+        >
+
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="group flex h-14 w-14 items-center justify-center rounded-full bg-primary transition-all duration-300 hover:scale-110"
+          >
+            <Image src="/images/f-1.png" alt="calling" width={28} height={28} />
+          </button>
+        </div>
+
+        {open && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+            <div className="w-full max-w-[420px] rounded-[24px] border border-white/10 bg-[#07111F] p-6 text-center text-white shadow-2xl">
+              <h3 className="mb-3 text-custom22 font-bold">تواصل معنا</h3>
+
+              <p className="mb-6 text-custom15 leading-7 text-white/70">
+                اختر طريقة التواصل المناسبة لك
+              </p>
+
+              <div className="space-y-3">
+                <Link
+                  href="https://wa.me/201012345678"
+                  target="_blank"
+                  className="block rounded-[12px] bg-[#25D366] px-6 py-3 text-custom16 font-semibold text-white"
+                >
+                  تواصل عبر واتساب
+                </Link>
+
+                <Link
+                  href={`/${locale}/contact`}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-[12px] bg-secondary px-6 py-3 text-custom16 font-semibold text-white"
+                >
+                  طلب استشارة
+                </Link>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="mt-5 text-custom14 text-white/60 hover:text-white"
+              >
+                إغلاق
+              </button>
+            </div>
+          </div>
+        )}
 
         <p className="py-5 text-center text-custom14 text-white/75">
           © 2026 علي سعيد الشامسي جميع الحقوق محفوظة.
