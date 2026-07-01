@@ -25,7 +25,7 @@ export default function ChangeLanguage() {
     >
       {currentLocale === "ar" ? "En" : "العربية"}
 
-      <Image src="/images/globe.png" alt="language" width={16} height={16} />
+      <Image src="/images/wd.png" alt="language" width={16} height={16} />
     </button>
   );
 }

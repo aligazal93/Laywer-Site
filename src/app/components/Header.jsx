@@ -52,7 +52,7 @@ export default function Header({ locale }) {
           }`}
         >
           <Link href="/" className="text-white text-lg font-semibold">
-            اللـوجـو
+          اللـوجـو
           </Link>
 
           <div className="flex items-center gap-4">
@@ -73,7 +73,7 @@ export default function Header({ locale }) {
 
               <Link
                 href={`/${locale}/contact`}
-                className="bg-[#D3AA60] px-6 py-3 rounded-[14px] text-custom14 font-[700] text-white transition hover:bg-[#b98f45]"
+                className="bg-secondary px-6 py-3 rounded-[14px] text-custom14 font-[700] text-white transition hover:bg-[#b98f45]"
               >
                 احجز استشارتك الآن
               </Link>
@@ -100,9 +100,6 @@ export default function Header({ locale }) {
             ? "translate-x-full"
             : "-translate-x-full"
         }`}
-        style={{
-          backgroundImage: "url('/images/layer.png')",
-        }}
       >
         <Link href={`/${locale}`}>اللـوجـو</Link>
 

@@ -60,7 +60,7 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           placeholder="ادخل الاسم بالكامل"
-          className="h-[52px] w-full rounded-xl  bg-[#0D2749] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="h-[52px] w-full rounded-xl  bg-[#131C31] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           placeholder="name@example.com"
-          className="h-[52px] w-full rounded-xl bg-[#0D2749] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="h-[52px] w-full rounded-xl bg-[#131C31] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
         />
       </div>
 
@@ -92,7 +92,7 @@ export default function ContactForm() {
           value={formData.phone}
           onChange={handleChange}
           placeholder="+966 500000000"
-          className="h-[52px] w-full rounded-xl  bg-[#0D2749] px-4 text-right text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="h-[52px] w-full rounded-xl  bg-[#131C31] px-4 text-right text-custom14 outline-none transition-all duration-300 focus:border-primary"
         />
       </div>
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
           value={formData.subject}
           onChange={handleChange}
           placeholder="كيف يمكننا مساعدتك"
-          className="h-[52px] w-full rounded-xl  bg-[#0D2749] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="h-[52px] w-full rounded-xl  bg-[#131C31] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
         />
       </div>
 
@@ -123,7 +123,7 @@ export default function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           placeholder="اكتب تفاصيل مشروعك أو استفسارك هنا"
-          className="w-full resize-none rounded-xl  bg-[#0D2749] px-4 py-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="w-full resize-none rounded-xl  bg-[#131C31] px-4 py-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
         />
       </div>
 

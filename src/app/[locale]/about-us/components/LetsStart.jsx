@@ -11,7 +11,7 @@ export default function LetsStart({ locale }) {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-primary bg-[url('/images/layer.png')] mb-20 bg-cover bg-center bg-no-repeat py-12 lg:py-48"
+      className="relative overflow-hidden  bg-cover bg-center bg-no-repeat py-12 lg:py-48"
     >
       <div className="absolute inset-0 bg-[url('/images/pattern.png')] bg-cover bg-center opacity-[0.08]" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#061321] to-transparent" />
@@ -63,12 +63,7 @@ export default function LetsStart({ locale }) {
             className="mt-8 inline-flex items-center gap-3 duration-300 rounded-full bg-secondary px-6 py-3 text-custom16 font-semibold text-white transition hover:bg-secondary/90"
           >
             احجز استشارتك الان
-            <FaArrowCircleLeft
-              size={22}
-              className={`text-white ${
-                isArabic ? "rotate-[30deg]" : "rotate-[130deg]"
-              }`}
-            />
+
           </Link>
         </motion.div>
       </div>

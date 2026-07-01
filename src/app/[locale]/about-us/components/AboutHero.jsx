@@ -8,25 +8,23 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 export default function AboutHero({ locale }) {
   const isArabic = locale === "ar";
   return (
-    <section className="relative min-h-screen mb-[20px] overflow-hidden bg-primary pt-28">
+    <section className="relative min-h-screen mb-[20px] overflow-hidden  pt-28">
       <div className="absolute inset-0">
         <Image
-          src="/images/bk.png"
+          src="/images/intro-4.png"
           alt=""
           fill
           priority
-          className="object-cover opacity-35"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-primary/0" />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/20 to-primary" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-112px)] max-w-[1200px] flex-col items-center px-6 text-center">
+      <div className="relative pt-10 z-10 mx-auto flex min-h-[calc(100vh-112px)] max-w-[1200px] flex-col items-center px-6 text-center">
         <motion.p
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="mb-4 text-custom20 font-[700] text-secondary md:text-custom24"
+          className="mb-4 text-custom28 font-[700] text-white md:text-custom28"
         >
           المحامي والمستشار القانوني
         </motion.p>
@@ -35,9 +33,9 @@ export default function AboutHero({ locale }) {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.1 }}
-          className="pointer-events-none absolute top-[145px] z-0 whitespace-nowrap text-[48px] font-bold leading-none text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.35)] md:text-[92px] lg:text-[120px]"
+          className="pointer-events-none absolute top-[155px] z-0 whitespace-nowrap text-[32px] font-bold leading-none text-secondary  md:text-[92px] lg:text-[100px]"
         >
-          علي سعيــــــــــــــــــــــــــــد الشامسـي
+          علي سعيــــــــــــــــــــــــــــــــــــــــــد الشامسـي
         </motion.h1>
 
         <div className="relative z-10 mt-8 grid w-full grid-cols-1 items-end gap-8 lg:grid-cols-12">
@@ -47,7 +45,7 @@ export default function AboutHero({ locale }) {
             transition={{ duration: 0.9, delay: 0.25 }}
             className="order-3 text-center lg:col-span-3 lg:pb-24 lg:text-right"
           >
-            <p className="text-custom14 leading-8 text-white/85">
+            <p className="text-custom18 leading-8 text-white/85">
               القانون في عالم اليوم لم يعد خياراً جانبياً، بل أداة استراتيجية
               لحماية المصالح وبناء قرارات واضحة وسط تحديات ومتغيرات. أعمل مع كل
               عميل كأن قضيته الشخصية، وأمنحه كل عناية مستحقة من رؤية ومتابعة
@@ -78,28 +76,13 @@ export default function AboutHero({ locale }) {
             transition={{ duration: 0.9, delay: 0.25 }}
             className="order-2 text-center lg:order-1 lg:col-span-3 lg:pb-2 lg:text-start"
           >
-            <p className="text-custom14 leading-8 text-white/85">
+            <p className="text-custom18 leading-8 text-white/85">
               أؤمن أن القانون ليس مجرد نصوص تقرأ، بل هو درع يحمي الحقوق، وبوصلة
               تقود إلى العدالة. منذ أكثر من عقدين من الزمن، وأنا أرافق عملائي في
               أدق قضاياهم، واضعاً كل خبرتي ومهنتي في خدمتهم بثبات وثقة وأمان.
             </p>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.85 }}
-          className="relative mt-20 mb-10"
-        >
-          <Link
-            href="#contact"
-            className="inline-flex items-center gap-3 rounded-full bg-secondary px-7 py-3 text-custom14 font-semibold text-white transition hover:bg-[#b98f45]"
-          >
-            احجز استشارتك الآن
-            {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
-          </Link>
-        </motion.div>
       </div>
     </section>
   );

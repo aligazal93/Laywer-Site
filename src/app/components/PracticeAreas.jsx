@@ -32,7 +32,7 @@ const practices = [
 
 export default function PracticeAreas() {
   return (
-    <section className="relative overflow-hidden bg-primary py-28">
+    <section className="relative overflow-hidden py-28">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="mb-12 text-center">
           <motion.span
@@ -40,7 +40,7 @@ export default function PracticeAreas() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-7 inline-flex rounded-full bg-secondary/10 px-5 py-2 text-custom12 font-semibold text-secondary"
+            className="mb-7 inline-flex rounded-full bg-secondary/10 px-6 py-2 text-custom16 font-semibold text-secondary"
           >
             • مجالات الممارسة القانونية
           </motion.span>

@@ -5,16 +5,23 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
-export default function AboutSection({locale}) {
+export default function AboutSection({ locale }) {
   const isArabic = locale === "ar";
 
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-primary bg-[url('/images/layer.png')] bg-cover bg-center bg-no-repeat py-48"
+      className="relative overflow-hidden bg-primary bg-[url('/images/intro-2.png')] bg-cover bg-center bg-no-repeat py-48"
     >
-      <div className="absolute inset-0 bg-[url('/images/pattern.png')] bg-cover bg-center opacity-[0.08]" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#061321] to-transparent" />
+    
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-[#07111F]/50" />
+
+      {/* Right to Left Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-l from-[#07111F]/20 via-[#07111F]/30 to-[#07111F]" />
+
+      {/* Top & Bottom Fade */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/20 via-transparent to-[#07111F]" />
       <div className="relative z-10 mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -38,26 +45,19 @@ export default function AboutSection({locale}) {
               على تقديم استشارات وخدمات قانونية تجمع بين التحليل الدقيق، والرؤية
               الاستراتيجية، والالتزام بأعلى معايير المهنية والسرية.
             </p>
-
-            <p>
-              أتعامل مع كل ملف باعتباره مسؤولية مستقلة تتطلب دراسة متأنية،
-              وقياسًا موضوعيًا، واختيار الحلول القانونية التي تحقق أفضل مصلحة
-              للعميل وفق الأنظمة المعمول بها.
-            </p>
-
-            <p>
-              بالنسبة لي، لا تقتصر المحاماة على تمثيل القضايا، بل تمتد إلى بناء
-              الثقة، وتقديم المشورة، ومساعدة العملاء في اتخاذ قرارات قانونية
-              واضحة ومدروسة.
-            </p>
           </div>
 
           <Link
             href="#"
             className="mt-8 inline-flex items-center gap-3 duration-300 rounded-full bg-secondary px-6 py-3 text-custom16 font-semibold text-white transition hover:bg-secondary/90"
           >
-            تعرّف على السيرة المهنية 
-            <FaArrowCircleLeft size={22} className={`text-white ${isArabic ? "rotate-[30deg]" : "rotate-[130deg]"}`}  />
+            تعرّف على السيرة المهنية
+            <FaArrowCircleLeft
+              size={22}
+              className={`text-white ${
+                isArabic ? "rotate-[30deg]" : "rotate-[130deg]"
+              }`}
+            />
           </Link>
         </motion.div>
 

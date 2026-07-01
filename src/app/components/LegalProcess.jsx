@@ -26,10 +26,16 @@ const steps = [
 export default function LegalProcess({ locale }) {
   const isArabic = locale === "ar";
   return (
-    <section className="relative overflow-hidden bg-primary bg-[url('/images/layer.png')] bg-cover bg-center bg-no-repeat py-0 lg:py-28">
-      <div className="absolute inset-0 bg-primary/35" />
+    <section className="relative overflow-hidden bg-[url('/images/intro-3.png')] bg-cover bg-center bg-no-repeat py-0 lg:py-28">
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-[#07111F]/50" />
 
-      <div className="relative container z-10 mx-auto  px-6">
+
+
+      {/* Top & Bottom Fade */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/20 via-transparent to-[#07111F]" />
+
+      <div className="relative z-10 w-full lg:max-w-[1200px] container">
         <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="text-start">
             <motion.span
@@ -75,7 +81,7 @@ export default function LegalProcess({ locale }) {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-12 items-center gap-2 lg:grid-cols-12">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <div className="col-span-12 lg:col-span-7">
             <div className="space-y-4 w-full">
               {steps.map((step, index) => (
@@ -89,7 +95,13 @@ export default function LegalProcess({ locale }) {
                     delay: index * 0.15,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="w-full rounded-[18px] border border-white/5 bg-secondary/10 px-5 py-7 text-start shadow-[0_20px_60px_rgba(0,0,0,0.18)] md:px-10 md:py-9"
+                  className="relative w-full overflow-hidden rounded-[24px] px-5 py-7 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:px-10 md:py-9 before:absolute before:inset-0 before:rounded-[24px]
+before:bg-gradient-to-b
+before:from-white/[0.05]
+before:via-transparent
+before:to-transparent
+before:pointer-events-none
+"
                 >
                   <span className="mb-4 block text-custom14 font-[700] text-secondary">
                     {step.label}
@@ -108,25 +120,22 @@ export default function LegalProcess({ locale }) {
           </div>
 
           <div className="col-span-12 lg:col-span-5">
-
-          <motion.div
-            initial={{ opacity: 0, x: -60, scale: 0.96 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex min-h-[520px] items-center justify-center lg:col-span-5"
-          >
-            <Image
-              src="/images/pic-1.png"
-              alt="ميزان العدالة"
-              width={520}
-              height={520}
-              className="h-auto w-full max-w-[500px] object-contain"
-            />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -60, scale: 0.96 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex min-h-[520px] items-center justify-center lg:col-span-5"
+            >
+              <Image
+                src="/images/pic-1.png"
+                alt="ميزان العدالة"
+                width={520}
+                height={520}
+                className="h-auto w-full max-w-[500px] object-contain"
+              />
+            </motion.div>
           </div>
-
-
         </div>
       </div>
     </section>

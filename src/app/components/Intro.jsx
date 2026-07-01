@@ -57,14 +57,14 @@ export default function Intro({ locale }) {
     <section className="relative min-h-screen overflow-hidden pb-0 bg-primary">
       <div className="absolute inset-0">
         <Image
-          src="/images/bk.png"
+          src="/images/intro.png"
           alt="مكتب محاماة"
           fill
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-[#061321]/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[primary]/5 via-[primary]/5 to-[primary]/90" />
+        <div className="absolute inset-0 bg-[#061321]/50" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-[primary]/5 via-[primary]/5 to-[primary]/10" /> */}
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[1200px] items-center px-6 pt-24">
@@ -77,14 +77,14 @@ export default function Intro({ locale }) {
           >
             <motion.span
               variants={itemVariants}
-              className="mb-5 inline-block rounded-full border border-[#D3AA60]/40 bg-[#D3AA60]/10 px-5 py-2 text-sm text-[#D3AA60]"
+              className="mb-5 inline-block rounded-full border border-[#D3AA60]/40 bg-[#BA8632]/10 px-5 py-2 text-custom18 text-[#D3AA60]"
             >
               المحامي والمستشار القانوني
             </motion.span>
 
             <motion.h1
               variants={itemVariants}
-              className="mb-5 font-[700] text-[#D3AA60] md:text-custom44"
+              className="mb-5 font-[700] text-[#BA8632] md:text-custom44"
             >
               علي سعيد الشامسـي
             </motion.h1>
@@ -113,7 +113,8 @@ export default function Intro({ locale }) {
                 href={`/${locale}/contact`}
                 className="flex items-center gap-2 rounded-full bg-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-[#b98f45]"
               >
-                احجز استشارتك الآن {isArabic ? <FaArrowLeft /> : <FaArrowRight />} 
+                احجز استشارتك الآن{" "}
+                {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
               </Link>
 
               <Link
@@ -145,19 +146,6 @@ export default function Intro({ locale }) {
           </motion.div>
         </div>
       </div>
-
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.8,
-          duration: 1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="pointer-events-none absolute bottom-0 left-0 right-0 text-center mx-auto  whitespace-nowrap select-none text-[50px] font-bold text-secondary/5 md:text-[70px] lg:text-[140px]"
-      >
-        علي سعيد الشامسي
-      </motion.h1>
     </section>
   );
 }

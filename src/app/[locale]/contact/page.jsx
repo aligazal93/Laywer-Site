@@ -22,13 +22,13 @@ export default async function ContactUs({ params }) {
 
         <div className="grid grid-cols-12 items-stretch gap-6">
           <div className="col-span-12 lg:col-span-8">
-            <div className="h-full rounded-[24px] bg-[#092543] p-6 md:p-8">
+            <div className="h-full rounded-[24px] bg-[#00091F] p-6 md:p-8">
               <ContactForm />
             </div>
           </div>
 
           <div className="col-span-12 lg:col-span-4">
-            <div className="h-full rounded-[24px] bg-[#092543] p-6 md:p-8">
+            <div className="h-full rounded-[24px] bg-[#00091F] p-6 md:p-8">
               <div className="space-y-9 text-right">
                 <InfoItem
                   icon="/images/address.png"
@@ -83,7 +83,7 @@ export default async function ContactUs({ params }) {
           </div>
 
 <div className="col-span-12">
-  <div className="mt-8 overflow-hidden rounded-3xl">
+  <div className="mt-8 mb-10 overflow-hidden rounded-3xl">
     <iframe
       title="Abu Dhabi Location"
       src="https://www.google.com/maps?q=Abu%20Dhabi,%20United%20Arab%20Emirates&z=13&output=embed"

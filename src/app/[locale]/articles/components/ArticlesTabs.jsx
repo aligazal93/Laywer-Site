@@ -58,7 +58,7 @@ export default function ArticlesTabs( { locale } ) {
       : articles.filter((article) => article.category === activeTab);
 
   return (
-    <section className="bg-primary pb-28 mt-[50px]">
+    <section className="pb-28 mt-[50px]">
       <div className="container">
         <div className="mb-10 flex flex-wrap items-center justify-center gap-4">
           {tabs.map((tab) => (

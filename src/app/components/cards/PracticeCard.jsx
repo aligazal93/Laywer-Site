@@ -14,7 +14,7 @@ export default function PracticeCard({ item, index }) {
         delay: index * 0.12,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="group relative min-h-[260px] overflow-hidden rounded-[14px] border border-white/10"
+      className="group relative min-h-[250px] overflow-hidden rounded-[10px] border border-white/10"
     >
       <Image
         src={item.image}
@@ -30,14 +30,14 @@ export default function PracticeCard({ item, index }) {
           alt=""
           width={44}
           height={44}
-          className="mb-4 h-11 w-11 object-contain"
+          className="mb-3 h-15 w-15 object-cover"
         />
 
         <h3 className="mb-2 text-custom24 font-[700] text-white">
           {item.title}
         </h3>
 
-        <p className="max-w-[300px] text-custom12 leading-[34px] text-[#95AAC7]">
+        <p className="lg:max-w-[350px] w-full overflow-hidden line-clamp-2 text-custom14 leading-[34px] text-[#95AAC7]">
           {item.text}
         </p>
       </div>

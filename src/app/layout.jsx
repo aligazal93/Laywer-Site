@@ -25,7 +25,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html className={ibmPlexArabic.variable}>
-      <body className="font-sans bg-primary">{children}</body>
+      <body className="font-sans bg-[#000511]">{children}</body>
     </html>
   );
 }

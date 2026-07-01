@@ -9,10 +9,8 @@ export default function MyCv({ locale }) {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-primary bg-[url('/images/layer.png')] bg-cover bg-center bg-no-repeat py-48"
+      className="relative overflow-hidden bg-cover bg-center bg-no-repeat py-26"
     >
-      <div className="absolute inset-0 bg-[url('/images/pattern.png')] bg-cover bg-center opacity-[0.08]" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#061321] to-transparent" />
       <div className="relative z-10 mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -21,7 +19,7 @@ export default function MyCv({ locale }) {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="text-center lg:text-right"
         >
-          <span className="mb-6 inline-block text-custom14 font-semibold text-secondary">
+          <span className="mb-6 inline-block text-custom18 font-semibold text-secondary">
             • المسيرة المهنية
           </span>
 
@@ -29,8 +27,8 @@ export default function MyCv({ locale }) {
             رحلة من التفاني في خدمة العدالة
           </h2>
 
-          <div className="space-y-5 text-custom18 leading-relaxed text-[#95AAC7]">
-            <p>
+          <div className="space-y-5 text-custom16 leading-[35px] text-[#95AAC7]">
+            <p className="mb-2 lg:mb-[120px]">
               بدأت رحلتي في أروقة المحاكم الإماراتية، حيث تشربت روح القانون من
               منابعه الأصيلة. لم أعتمد يومًا على المسارات التقليدية وحدها، بل
               سعيت دائمًا إلى فهم أعمق لدقائق التشريعات وتقاطعاتها مع الواقع
@@ -55,7 +53,7 @@ export default function MyCv({ locale }) {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="flex justify-center lg:justify-start"
         >
-          <div className="rounded-[0_48px_48px_48px] overflow-hidden">
+          <div className="mb-[60px] lg:mb-[100px] overflow-hidden">
             <Image
               src="/images/about-2.png"
               alt="علي سعيد الشامسي"

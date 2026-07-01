@@ -16,7 +16,7 @@ const values = [
     text: "تحليل الوقائع والأنظمة بعناية للوصول إلى حلول قانونية مدروسة تستند إلى أسس واضحة.",
   },
   {
-    icon: "/images/icon-4.png",
+    icon: "/images/icon-3.png",
     title: "الخصوصية",
     text: "التعامل مع جميع المعلومات والوثائق بأعلى درجات السرية مع احترام خصوصية كل قضية وكل عميل.",
   },
@@ -30,8 +30,8 @@ const values = [
 export default function ValuesSection({ locale }) {
   
   return (
-    <section className="relative overflow-hidden bg-primary py-24">
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#071b33] to-transparent" />
+    <section className="relative overflow-hidden  py-24">
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t " />
 
       <div className="relative z-10 mx-auto max-w-[1200px] px-6 text-center">
         <motion.span
@@ -39,9 +39,9 @@ export default function ValuesSection({ locale }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-8 inline-flex rounded-full bg-secondary/10 px-6 py-3 text-custom16 font-semibold text-secondary"
+          className="mb-8 inline-flex rounded-full bg-[#BA8632]/20 px-6 py-2 text-custom14 font-semibold text-secondary"
         >
-          منهجي يرتكز على الدقة والوضوح
+         منهج يرتكز على الثقة والوضوح
         </motion.span>
 
         <motion.h2
@@ -49,7 +49,7 @@ export default function ValuesSection({ locale }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mx-auto max-w-[850px] text-center text-custom14 font-bold leading-[1.9] text-white md:text-custom2"
+          className="text-center w-full lg:w-[80%] block mx-auto text-custom22 font-[500] leading-[1.9] text-white "
         >
           أؤمن أن كل قضية تحمل تفاصيلها الخاصة، وأن أفضل الحلول القانونية تبدأ
           بالاستماع الجيد، والتحليل الدقيق، وفهم أهداف العميل قبل تقديم أي رأي
@@ -73,7 +73,7 @@ export default function ValuesSection({ locale }) {
                   delay: index * 0.15,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="relative px-8 text-center lg:border-r lg:border-white/10 first:lg:border-r-0"
+                className="relative px-8 text-center lg:border-r lg:border-secondary/20 first:lg:border-r-0"
               >
                 <Image
                   src={item.icon}

@@ -32,12 +32,12 @@ export default function ArticlesSection({ locale }) {
   const activeArticle = articles[activeIndex];
 
   return (
-    <section className="bg-primary py-28">
+    <section className=" py-28">
       <div className="mx-auto max-w-[1200px] px-6 mb-20">
-        <div className="mb-16 md:block lg:flex items-end justify-between">
+        <div className="mb-16 md:block lg:flex items-center justify-between">
           <div className="text-start">
-            <span className="mb-5 inline-flex rounded-full bg-secondary/10 px-5 py-2 text-custom12 text-secondary">
-              • الرؤى القانونية
+            <span className="mb-5 inline-flex rounded-full bg-secondary/10 px-6 py-2 text-custom14 text-secondary">
+              • الرؤى قانونية
             </span>
 
             <h2 className="text-custom36 font-bold mb-4 text-white">
