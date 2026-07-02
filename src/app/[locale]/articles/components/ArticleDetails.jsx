@@ -10,6 +10,7 @@ export default function ArticleDetails({ article, index , locale , }) {
   const isArabic = locale === "ar";
 const stripHtml = (html = "") => html.replace(/<[^>]+>/g, "");
 const dict = getDictionary(locale);
+console.log("IMAGE DEBUG:", article?.image);
   return (
     <motion.div
       initial={{ opacity: 0, y: 35 }}

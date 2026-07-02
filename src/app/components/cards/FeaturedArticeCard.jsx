@@ -10,6 +10,7 @@ export default function FeaturedArticleCard({ article, locale }) {
     const stripHtml = (html) => {
     return html.replace(/<[^>]+>/g, "");
   };
+  console.log("IMAGE DEBUG:", article?.image);
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -21,8 +22,8 @@ export default function FeaturedArticleCard({ article, locale }) {
         className="group relative overflow-hidden rounded-2xl"
       >
         <Image
-          src={article.image}
-          alt={article.title}
+          src={article?.image || "/images/icon-1.png"}
+          alt={article?.title || "article"}
           width={700}
           height={600}
           className="h-[540px] w-full object-cover transition duration-700 group-hover:scale-105"

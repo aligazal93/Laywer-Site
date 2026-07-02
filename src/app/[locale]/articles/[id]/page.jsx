@@ -30,6 +30,8 @@ export default function ArticleDetailsPage() {
     );
   }
 
+  console.log("IMAGE DEBUG:", article?.image);
+
   return (
     <main className="bg-primary">
       <section className="container py-[160px]">

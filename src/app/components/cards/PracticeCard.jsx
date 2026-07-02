@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function PracticeCard({ item, index }) {
+  console.log("IMAGE DEBUG:", item?.image);
   return (
     <motion.div
       initial={{ opacity: 0, y: 35 }}
