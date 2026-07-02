@@ -17,8 +17,8 @@ export default function PracticeCard({ item, index }) {
       className="group relative min-h-[250px] overflow-hidden rounded-[10px] border border-white/10"
     >
       <Image
-        src={item.image}
-        alt={item.name}
+        src={item?.image || "/images/icon-1.png"}
+        alt={item?.name || "item"}
         fill
         className="object-cover transition duration-700 group-hover:scale-105"
       />
@@ -26,19 +26,19 @@ export default function PracticeCard({ item, index }) {
 
       <div className="relative z-10 flex h-full min-h-[260px] flex-col justify-center px-9 text-start">
         <Image
-          src={item.icon}
-          alt={item.name}
+          src={item?.icon || "/images/icon-1.png"}
+          alt={item?.name || "item"}
           width={44}
           height={44}
           className="mb-3 h-15 w-15 object-cover"
         />
 
         <h3 className="mb-2 text-custom24 font-[700] text-white">
-          {item.name}
+          {item?.name || "item"}
         </h3>
 
         <p className="lg:max-w-[350px] w-full overflow-hidden line-clamp-2 text-custom14 leading-[34px] text-[#95AAC7]">
-          {item.content}
+          {item?.content || "item"}
         </p>
       </div>
     </motion.div>

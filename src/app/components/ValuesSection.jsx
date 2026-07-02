@@ -65,11 +65,11 @@ export default function ValuesSection({ locale }) {
                 />
 
                 <h3 className="mb-4 text-custom20 font-bold text-white">
-                  {item.title}
+                  {item?.title}
                 </h3>
 
                 <p className="mx-auto max-w-[230px] text-custom12 leading-6 text-white/50">
-                  {item.content}
+                  {item?.content}
                 </p>
               </motion.div>
             );

@@ -18,8 +18,8 @@ const dict = getDictionary(locale);
       className="group relative min-h-[340px] overflow-hidden rounded-2xl border border-[#0D2749]"
     >
       <Image
-        src={article.image}
-        alt={article.title}
+        src={article?.image || "/images/icon-1.png"}
+        alt={article?.title || "article"}
         fill
         className="object-cover transition duration-700 group-hover:scale-105"
       />

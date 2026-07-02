@@ -48,8 +48,8 @@ export default function ArticleDetailsPage() {
             <div className="relative my-[10px] overflow-hidden rounded-[24px]">
               <div className="relative mx-auto my-10 h-[300px] w-full overflow-hidden rounded-[28px] sm:h-[350px] lg:h-[500px] lg:w-[90%]">
                 <Image
-                  src={article.image}
-                  alt={article.title}
+                  src={article?.image || "/images/icon-1.png"}
+                  alt={article?.title || "article"}
                   fill
                   priority
                   className="object-fill object-center"
