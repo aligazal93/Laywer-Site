@@ -16,8 +16,6 @@ export default function ValuesSection({ locale }) {
 
   if (error) return <ErrorState />;
 
-
-
   return (
     <section className="relative overflow-hidden  py-24">
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t " />
@@ -59,8 +57,8 @@ export default function ValuesSection({ locale }) {
                 className="relative px-8 text-center lg:border-r lg:border-secondary/20 first:lg:border-r-0"
               >
                 <Image
-                  src={item.icon}
-                  alt={item.title}
+                  src="/images/icon-1.png"
+                  alt={item?.title || "icon"}
                   width={40}
                   height={40}
                   className="mx-auto mb-6 h-10 w-10 object-contain"

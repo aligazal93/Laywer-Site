@@ -10,11 +10,8 @@ import ErrorState from "./ErrorState";
 import { getDictionary } from "@/lib/getDictionary";
 
 export default function Intro({ locale }) {
-  const { data, isLoading, error } = useHome(locale);
   const dict = getDictionary(locale);
 
-  if (isLoading) return <LoadingCard />;
-  if (error) return <ErrorState />;
   const isArabic = locale === "ar";
 
   const contentVariants = {
