@@ -13,7 +13,7 @@ export default function MoreArticles({ locale, articles = [] }) {
         <h1 className="text-custom18 font-bold text-white"> {dict?.articles?.RelatedArticles} </h1>
       </div>
       {articles.slice(0, 3).map((article, index) => (
-        <div key={article.id} className="col-span-12 md:col-span-6 lg:col-span-4">
+        <div key={article?.id || ""} className="col-span-12 md:col-span-6 lg:col-span-4">
           <ArticleDetails locale={locale} article={article} index={index} />
         </div>
       ))}

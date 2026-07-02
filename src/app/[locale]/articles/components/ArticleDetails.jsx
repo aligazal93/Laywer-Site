@@ -37,7 +37,7 @@ console.log("IMAGE DEBUG:", article?.image);
         </p>
 
         <Link
-           href={`/${locale}/articles/${article.id}`}
+           href={`/${locale}/articles/${article?.id || ""}`}
           className="inline-flex items-center gap-2 text-secondary"
         >
           {dict?.articles?.readMore}

@@ -42,9 +42,9 @@ export default function ArticlesTabs({ categories = [], locale }) {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => setActiveTab(tab?.id || "")}
               className={`rounded-full border px-6 py-3 text-custom14 font-[600] transition ${
-                activeTab === tab.id
+                activeTab === tab?.id || ""
                   ? "border-secondary bg-secondary text-white"
                   : "border-[#263B58] bg-transparent text-white hover:border-secondary hover:text-secondary"
               }`}
@@ -56,7 +56,7 @@ export default function ArticlesTabs({ categories = [], locale }) {
 
         <div className="grid grid-cols-12 gap-6">
           {filteredArticles.map((article, index) => (
-            <div key={article.id} className="col-span-12 md:col-span-6 lg:col-span-4">
+            <div key={article?.id || ""} className="col-span-12 md:col-span-6 lg:col-span-4">
               <ArticleDetails locale={locale} article={article} index={index} />
             </div>
           ))}
