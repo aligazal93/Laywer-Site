@@ -2,8 +2,15 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useAbout } from "@/hooks/useAbout";
+import LoadingCard from "@/app/components/LoadingCard";
+import ErrorState from "@/app/components/ErrorState";
 
 export default function MyCv({ locale }) {
+    const { data, isLoading, error } = useAbout(locale);
+    if (isLoading) return <LoadingCard />;
+    if (error) return <ErrorState />;
+    const aboutData = data?.about || {};
   const isArabic = locale === "ar";
 
   return (
@@ -29,16 +36,8 @@ export default function MyCv({ locale }) {
 
           <div className="space-y-5 text-custom16 leading-[35px] text-[#95AAC7]">
             <p className="mb-2 lg:mb-[120px]">
-              بدأت رحلتي في أروقة المحاكم الإماراتية، حيث تشربت روح القانون من
-              منابعه الأصيلة. لم أعتمد يومًا على المسارات التقليدية وحدها، بل
-              سعيت دائمًا إلى فهم أعمق لدقائق التشريعات وتقاطعاتها مع الواقع
-              المعيش للناس والشركات. عبر السنوات، نسجت علاقات متينة مع نخبة من
-              القضاة والمستشارين وزملاء المهنة، مؤسسًا لنفسي مكانة راسخة في
-              الوسط القانوني. كل قضية خضتها أضافت إلى مخزوني المعرفي بُعدًا
-              جديدًا، وكل تحدٍ واجهته صقل مهاراتي وجعلني أكثر استعدادًا لما هو
-              أعقد. اليوم، وبعد أكثر من عشرين عامًا من العطاء المتواصل، أقف عند
-              محطة جديدة من النضج المهني، حاملًا معي إرثًا من الثقة والمصداقية،
-              ومتطلعًا إلى مستقبل أكون فيه شريكًا أمينًا لكل من يبحث عن العدالة.
+              {aboutData?.bio || ""}
+
             </p>
 
 

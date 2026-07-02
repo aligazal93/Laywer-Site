@@ -7,10 +7,13 @@ import { FaArrowLeft } from "react-icons/fa";
 
 export default function FeaturedArticleCard({ article, locale }) {
   const isArabic = locale === "ar";
+    const stripHtml = (html) => {
+    return html.replace(/<[^>]+>/g, "");
+  };
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={article.title}
+        key={article.id}
         initial={{ opacity: 0, x: 30, scale: 0.98 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
         exit={{ opacity: 0, x: -20, scale: 0.98 }}
@@ -32,8 +35,8 @@ export default function FeaturedArticleCard({ article, locale }) {
             {article.title}
           </h3>
 
-          <p className="mb-6 leading-8 text-white/70">
-            {article.description}
+          <p className="mb-6 leading-8 line-clamp-3 text-white/70">
+            {stripHtml(article.content)}
           </p>
 
           <Link href="#" className="inline-flex items-center gap-2 text-secondary">

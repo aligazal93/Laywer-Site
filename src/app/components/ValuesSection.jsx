@@ -1,34 +1,23 @@
 "use client";
 
+import { useHome } from "@/hooks/useHome";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FaHandshake, FaBullseye, FaShieldAlt, FaTrophy } from "react-icons/fa";
-
-const values = [
-  {
-    icon: "/images/icon-1.png",
-    title: "المسؤولية",
-    text: "أتعامل مع ملفك باهتمام كامل، وتقديم الدعم القانوني الذي يساعد العميل على اتخاذ قرارات واثقة.",
-  },
-  {
-    icon: "/images/icon-2.png",
-    title: "الدقة",
-    text: "تحليل الوقائع والأنظمة بعناية للوصول إلى حلول قانونية مدروسة تستند إلى أسس واضحة.",
-  },
-  {
-    icon: "/images/icon-3.png",
-    title: "الخصوصية",
-    text: "التعامل مع جميع المعلومات والوثائق بأعلى درجات السرية مع احترام خصوصية كل قضية وكل عميل.",
-  },
-  {
-    icon: "/images/icon-4.png",
-    title: "النزاهة",
-    text: "الالتزام بالشفافية والمهنية في جميع مراحل العمل، بما يحفظ حقوق العميل ويعزز الثقة المتبادلة.",
-  },
-];
+import LoadingCard from "./LoadingCard";
+import ErrorState from "./ErrorState";
+import { getDictionary } from "@/lib/getDictionary";
 
 export default function ValuesSection({ locale }) {
-  
+  const { data, isLoading, error } = useHome(locale);
+  const goals = data?.goals || [];
+  const dict = getDictionary(locale);
+
+  if (isLoading) return <LoadingCard />;
+
+  if (error) return <ErrorState />;
+
+
+
   return (
     <section className="relative overflow-hidden  py-24">
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t " />
@@ -41,7 +30,7 @@ export default function ValuesSection({ locale }) {
           transition={{ duration: 0.6 }}
           className="mb-8 inline-flex rounded-full bg-[#BA8632]/20 px-6 py-2 text-custom14 font-semibold text-secondary"
         >
-         منهج يرتكز على الثقة والوضوح
+          {dict?.about?.title}
         </motion.span>
 
         <motion.h2
@@ -51,20 +40,14 @@ export default function ValuesSection({ locale }) {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-center w-full lg:w-[80%] block mx-auto text-custom22 font-[500] leading-[1.9] text-white "
         >
-          أؤمن أن كل قضية تحمل تفاصيلها الخاصة، وأن أفضل الحلول القانونية تبدأ
-          بالاستماع الجيد، والتحليل الدقيق، وفهم أهداف العميل قبل تقديم أي رأي
-          أو اتخاذ أي إجراء. لذلك أحرص على تقديم استشارات وخدمات قانونية مبنية
-          على المعرفة، والوضوح، والالتزام، بما يحقق أفضل النتائج الممكنة ضمن
-          إطار القانون.
+          {dict?.about?.description}
         </motion.h2>
 
         <div className="mt-20 grid grid-cols-1 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
-          {values.map((item, index) => {
-            const Icon = item.icon;
-
+          {goals.map((item, index) => {
             return (
               <motion.div
-                key={item.title}
+                key={index}
                 initial={{ opacity: 0, y: 35 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -88,7 +71,7 @@ export default function ValuesSection({ locale }) {
                 </h3>
 
                 <p className="mx-auto max-w-[230px] text-custom12 leading-6 text-white/50">
-                  {item.text}
+                  {item.content}
                 </p>
               </motion.div>
             );

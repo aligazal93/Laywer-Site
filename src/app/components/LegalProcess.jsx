@@ -4,35 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaArrowCircleLeft } from "react-icons/fa";
-
-const steps = [
-  {
-    label: "الخطوة الأولى",
-    title: "الاستماع وفهم القضية",
-    text: "تبدأ الرحلة بالتعرف على تفاصيل القضية، ومراجعة المعلومات والمستندات، وفهم احتياجات العميل للوصول إلى رؤية قانونية دقيقة.",
-  },
-  {
-    label: "الخطوة الثانية",
-    title: "التحليل ووضع الاستراتيجية",
-    text: "يتم تحليل جميع الجوانب القانونية بعناية، ثم إعداد استراتيجية واضحة تتناسب مع طبيعة القضية وتحقق أفضل مسار قانوني ممكن.",
-  },
-  {
-    label: "الخطوة الثالثة",
-    title: "التنفيذ والمتابعة",
-    text: "إدارة الإجراءات القانونية ومتابعة جميع مراحل العمل، مع التواصل المستمر لضمان وضوح الخطوات وحماية مصالح العميل.",
-  },
-];
+import { useHome } from "@/hooks/useHome";
+import LoadingCard from "./LoadingCard";
+import ErrorState from "./ErrorState";
+import { getDictionary } from "@/lib/getDictionary";
 
 export default function LegalProcess({ locale }) {
+  const { data, isLoading, error } = useHome(locale);
+  const steps = data?.case_steps || [];
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorState />;
+  const dict = getDictionary(locale);
+
   const isArabic = locale === "ar";
   return (
     <section className="relative overflow-hidden bg-[url('/images/intro-3.png')] bg-cover bg-center bg-no-repeat py-0 lg:py-28">
-      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-[#07111F]/50" />
-
-
-
-      {/* Top & Bottom Fade */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/20 via-transparent to-[#07111F]" />
 
       <div className="relative z-10 w-full lg:max-w-[1200px] container">
@@ -45,7 +32,7 @@ export default function LegalProcess({ locale }) {
               transition={{ duration: 0.6 }}
               className="mb-6 inline-flex rounded-full bg-secondary/10 px-6 py-3 text-custom14 font-semibold text-secondary"
             >
-              • مجالات الممارسة القانونية
+              {dict?.services?.title}
             </motion.span>
 
             <motion.h2
@@ -55,7 +42,7 @@ export default function LegalProcess({ locale }) {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="w-full text-[26px] font-bold leading-relaxed text-white md:text-custom2"
             >
-              كل قضية تستحق دراسة دقيقة وكل قرار قانوني يبدأ بخطة واضحة.
+              {dict?.services?.subtitle}
             </motion.h2>
           </div>
 
@@ -67,10 +54,10 @@ export default function LegalProcess({ locale }) {
             className=""
           >
             <Link
-              href="#contact"
+              href={`${locale}/contact`}
               className="inline-flex items-center gap-3 rounded-full bg-secondary px-6 py-3 text-custom14 font-semibold text-white transition hover:bg-[#b98f45]"
             >
-              احجز استشارتك القانونية
+             {dict?.header?.book}
               <FaArrowCircleLeft
                 size={22}
                 className={`text-white ${
@@ -81,12 +68,12 @@ export default function LegalProcess({ locale }) {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 items-center gap-2 lg:grid-cols-12">
           <div className="col-span-12 lg:col-span-7">
             <div className="space-y-4 w-full">
               {steps.map((step, index) => (
                 <motion.div
-                  key={step.title}
+                  key={index}
                   initial={{ opacity: 0, y: 35 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -95,16 +82,10 @@ export default function LegalProcess({ locale }) {
                     delay: index * 0.15,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="relative w-full overflow-hidden rounded-[24px] px-5 py-7 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:px-10 md:py-9 before:absolute before:inset-0 before:rounded-[24px]
-before:bg-gradient-to-b
-before:from-white/[0.05]
-before:via-transparent
-before:to-transparent
-before:pointer-events-none
-"
+                  className="relative w-full overflow-hidden rounded-[24px] px-5 py-7 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:px-10 md:py-9 before:absolute before:inset-0 before:rounded-[24px] before:bg-gradient-to-b before:from-white/[0.05] before:via-transparent before:to-transparent before:pointer-events-none"
                 >
                   <span className="mb-4 block text-custom14 font-[700] text-secondary">
-                    {step.label}
+                    {step.step_rank}
                   </span>
 
                   <h3 className="mb-4 text-[22px] font-bold text-white md:text-custom28">
@@ -112,7 +93,7 @@ before:pointer-events-none
                   </h3>
 
                   <p className="w-full leading-7 text-[#95AAC7] text-custom16">
-                    {step.text}
+                    {step.content}
                   </p>
                 </motion.div>
               ))}

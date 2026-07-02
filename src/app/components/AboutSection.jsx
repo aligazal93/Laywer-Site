@@ -13,7 +13,6 @@ export default function AboutSection({ locale }) {
       id="about"
       className="relative overflow-hidden bg-primary bg-[url('/images/intro-2.png')] bg-cover bg-center bg-no-repeat py-48"
     >
-    
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-[#07111F]/50" />
 
@@ -48,7 +47,8 @@ export default function AboutSection({ locale }) {
           </div>
 
           <Link
-            href="#"
+            href="/site.pdf"
+            target="_blank"
             className="mt-8 inline-flex items-center gap-3 duration-300 rounded-full bg-secondary px-6 py-3 text-custom16 font-semibold text-white transition hover:bg-secondary/90"
           >
             تعرّف على السيرة المهنية

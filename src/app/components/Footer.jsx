@@ -8,28 +8,37 @@ import {
   FaXTwitter,
   FaTiktok,
 } from "react-icons/fa6";
-
-import { FaWhatsapp } from "react-icons/fa";
 import { useState } from "react";
-
-const socialLinks = [
-  { icon: FaFacebookF, href: "#" },
-  { icon: FaInstagram, href: "#" },
-  { icon: FaXTwitter, href: "#" },
-  { icon: FaSnapchat, href: "#" },
-  { icon: FaTiktok, href: "#" },
-];
-
-const footerLinks = [
-  { title: "الرئيسية", href: "#home" },
-  { title: "نبذة عني", href: "#about" },
-  { title: "المقالات", href: "#articles" },
-  { title: "تواصل معي", href: "#contact" },
-];
+import { useHome } from "@/hooks/useHome";
+import LoadingCard from "./LoadingCard";
+import ErrorState from "./ErrorState";
+import { getDictionary } from "@/lib/getDictionary";
 
 export default function Footer({ locale }) {
+  const dict = getDictionary(locale);
+
+  const footerLinks = [
+    { title: dict?.header?.home, href: `/${locale}/` },
+    { title: dict?.header?.about, href: `/${locale}/about-us` },
+    { title: dict?.header?.articles, href: `/${locale}/articles` },
+    { title: dict?.header?.contact, href: `/${locale}/contact` },
+  ];
+
   const isArabic = locale === "ar";
   const [open, setOpen] = useState(false);
+
+  const { data, isLoading, error } = useHome();
+  const informations = data?.informations || [];
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorState />;
+
+  const socialLinks = [
+    { icon: FaFacebookF, href: informations?.facebook || "#" },
+    { icon: FaInstagram, href: informations?.instagram || "#" },
+    { icon: FaXTwitter, href: informations?.twitter || "#" },
+    { icon: FaSnapchat, href: informations?.snapchat || "#" },
+    { icon: FaTiktok, href: informations?.tiktok || "#" },
+  ];
 
   return (
     <footer className="relative bg-[#00091F] mt-[0px] pt-[200px] text-white">
@@ -54,24 +63,24 @@ export default function Footer({ locale }) {
   "
         >
           <p className="mb-3 text-custom18 font-semibold text-white/80">
-            بداية خطوتك القانونية
+            {dict?.cta?.title}
           </p>
 
-          <h2 className="mx-auto mb-2 max-w-[760px] text-custom22 font-bold leading-relaxed text-white lg:text-custom30">
-            لأن كل قرار قانوني مهم، تبدأ أفضل الحلول بحوار واضح.
+          <h2 className="mx-auto mb-2 max-w-[760px] text-custom22 line-clamp-3 font-bold leading-relaxed text-white lg:text-custom24">
+            {dict?.cta?.description}
           </h2>
 
-          <p className="mx-auto mb-4 max-w-[620px] text-custom16 leading-8 text-white/85">
+          {/* <p className="mx-auto mb-4 max-w-[620px] text-custom16 leading-8 text-white/85">
             إذا كنت تبحث عن استشارة قانونية تعتمد على الفهم الدقيق، والرؤية
             الواضحة، والالتزام المهني، يمكنك حجز موعد لبدء مناقشة حالتك والحصول
             على التوجيه القانوني المناسب.
-          </p>
+          </p> */}
 
           <Link
-            href="#contact"
+            href={`${locale}/contact`}
             className="w-[250px] mx-auto items-center rounded-full block bg-[#07111F] px-8 py-3 text-custom16 font-semibold text-white transition duration-300 hover:bg-[#0D1B30] my-2"
           >
-            تواصل الآن
+            {dict?.cta?.button}
           </Link>
         </div>
 
@@ -85,21 +94,19 @@ export default function Footer({ locale }) {
             </Link>
 
             <p className="w-full lg:max-w-[300px] text-custom16 leading-7 text-white/85">
-              بيتك يبدأ بالتفاصيل المناسبة نوفر مجموعة متنوعة من الأثاث
-              والمفروشات والإضاءة بتصميمات تجمع بين الجودة والراحة لتناسب مختلف
-              الاحتياجات والأذواق.
+              {informations?.small_about || ""}
             </p>
           </div>
 
           {/* Site Links */}
           <div className="text-center lg:text-right">
             <h3 className="mb-4 text-custom16 font-bold text-secondary">
-              أقسام الموقع
+              {dict?.footer?.siteSections}
             </h3>
 
             <ul className="space-y-4">
-              {footerLinks.map((link) => (
-                <li key={link.title}>
+              {footerLinks.map((link, index) => (
+                <li key={index}>
                   <Link
                     href={link.href}
                     className="text-custom14 text-white/85 transition hover:text-secondary"
@@ -114,25 +121,25 @@ export default function Footer({ locale }) {
           {/* Customer Service */}
           <div className="text-center lg:text-right">
             <h3 className="mb-4 text-custom16 font-bold text-secondary">
-              خدمة العملاء
+              {dict?.footer?.customerService}
             </h3>
 
             <ul className="space-y-4">
               <li>
                 <Link
-                  href="#"
+                  href={`/${locale}/privacy-policy`}
                   className="text-custom14 text-white/85 transition hover:text-secondary"
                 >
-                  سياسة الخصوصية
+                  {dict?.header?.privacyPolicy}
                 </Link>
               </li>
 
               <li>
                 <Link
-                  href="#"
+                  href={`/${locale}/terms-conditions`}
                   className="text-custom14 text-white/85 transition hover:text-secondary"
                 >
-                  الشروط والأحكام
+                  {dict?.header?.termsConditions}
                 </Link>
               </li>
             </ul>
@@ -141,7 +148,7 @@ export default function Footer({ locale }) {
           {/* Contact */}
           <div className="text-center lg:text-start">
             <h3 className="mb-4 text-custom16 font-bold text-secondary">
-              تواصل معنا
+              {dict?.footer?.contact}
             </h3>
 
             <ul className="space-y-3 text-custom14 text-white/90">
@@ -152,7 +159,7 @@ export default function Footer({ locale }) {
                   width={20}
                   height={20}
                 />{" "}
-                01036182516{" "}
+                {informations?.phone}
               </li>
               <li className="flex items-center  lg:justify-start justify-center gap-2">
                 {" "}
@@ -162,7 +169,7 @@ export default function Footer({ locale }) {
                   width={20}
                   height={20}
                 />{" "}
-                info@Globalinx.com
+                {informations?.email}
               </li>
               <li className="flex items-center  lg:justify-start justify-center gap-2">
                 {" "}
@@ -172,12 +179,12 @@ export default function Footer({ locale }) {
                   width={20}
                   height={20}
                 />{" "}
-                الحي الدولي العاشر بجوار كارفور المعادي
+                {informations?.address}
               </li>
             </ul>
 
             <h3 className="mb-4 mt-6 text-custom14 font-bold text-secondary">
-              تابعنا على
+              {dict?.footer?.followUsOn}
             </h3>
 
             <div className="flex justify-center gap-3 lg:justify-start">
@@ -199,7 +206,6 @@ export default function Footer({ locale }) {
             isArabic ? "right-6" : "left-6"
           }`}
         >
-
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -215,16 +221,16 @@ export default function Footer({ locale }) {
               <h3 className="mb-3 text-custom22 font-bold">تواصل معنا</h3>
 
               <p className="mb-6 text-custom15 leading-7 text-white/70">
-                اختر طريقة التواصل المناسبة لك
+                {dict?.footer?.chooseContactUsMethod}
               </p>
 
               <div className="space-y-3">
                 <Link
-                  href="https://wa.me/201012345678"
+                  href={`https://wa.me/${informations?.phone}`}
                   target="_blank"
                   className="block rounded-[12px] bg-[#25D366] px-6 py-3 text-custom16 font-semibold text-white"
                 >
-                  تواصل عبر واتساب
+                  {dict?.footer?.contactUsWhatsApp}
                 </Link>
 
                 <Link
@@ -232,7 +238,7 @@ export default function Footer({ locale }) {
                   onClick={() => setOpen(false)}
                   className="block rounded-[12px] bg-secondary px-6 py-3 text-custom16 font-semibold text-white"
                 >
-                  طلب استشارة
+                  {dict?.footer?.RequestConsultation}
                 </Link>
               </div>
 
@@ -241,14 +247,14 @@ export default function Footer({ locale }) {
                 onClick={() => setOpen(false)}
                 className="mt-5 text-custom14 text-white/60 hover:text-white"
               >
-                إغلاق
+                {dict?.footer?.close}
               </button>
             </div>
           </div>
         )}
 
         <p className="py-5 text-center text-custom14 text-white/75">
-          © 2026 علي سعيد الشامسي جميع الحقوق محفوظة.
+          © 2026 {dict?.footer?.copyright}
         </p>
       </div>
     </footer>

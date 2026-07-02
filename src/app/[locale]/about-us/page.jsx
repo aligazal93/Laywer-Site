@@ -5,12 +5,13 @@ import MyCv from "./components/MyCv";
 import MyWord from "./components/MyWord";
 import LetsStart from "./components/LetsStart";
 
-export default async function AboutUsPage({ locale }) {
+export default async function AboutUsPage({ params }) {
+  const { locale } = await params;
   return (
     <>
       <AboutHero locale={locale} />
       <ValuesSection locale={locale} />
-      <MyCv locale={locale} />
+      {/* <MyCv locale={locale} /> */}
       <MyWord locale={locale} />
       <LetsStart locale={locale} />
     </>

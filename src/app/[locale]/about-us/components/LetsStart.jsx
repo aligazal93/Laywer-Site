@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaArrowCircleLeft } from "react-icons/fa";
+import { getDictionary } from "@/lib/getDictionary";
 
 export default function LetsStart({ locale }) {
   const isArabic = locale === "ar";
-
+  const dict = getDictionary(locale);
   return (
     <section
       id="about"
@@ -42,27 +42,24 @@ export default function LetsStart({ locale }) {
           className="text-center lg:text-right"
         >
           <span className="mb-6 inline-block text-custom14 font-semibold text-secondary">
-            • لنبدأ الحديث
+            {dict.contactSection.badge}
           </span>
 
           <h2 className="mb-8  text-[32px] font-bold leading-[1.6] text-white md:text-[42px] lg:ml-auto">
-            لنبدأ الحديث حول احتياجاتك القانونية
+            {dict.contactSection.title}
           </h2>
 
           <div className="space-y-5 text-custom18 leading-relaxed text-[#95AAC7]">
             <p>
-              اسمي علي سعيد الشامسي، محامٍ ومستشار قانوني أؤمن بأن العمل
-              القانوني يبدأ بفهم احتياجات العميل قبل البحث عن الحلول. لذلك أحرص
-              على تقديم استشارات وخدمات قانونية تجمع بين التحليل الدقيق، والرؤية
-              الاستراتيجية، والالتزام بأعلى معايير المهنية والسرية.
+              {dict.contactSection.description}
             </p>
           </div>
 
           <Link
-            href="#"
+            href={`/${locale}/contact`}
             className="mt-8 inline-flex items-center gap-3 duration-300 rounded-full bg-secondary px-6 py-3 text-custom16 font-semibold text-white transition hover:bg-secondary/90"
           >
-            احجز استشارتك الان
+           {dict.header.book}
 
           </Link>
         </motion.div>

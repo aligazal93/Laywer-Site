@@ -3,16 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { getDictionary } from "@/lib/getDictionary";
 
-export default function ArticleDetails({ article, index , locale }) {
-
+export default function ArticleDetails({ article, index , locale , }) {
+  const isArabic = locale === "ar";
+const stripHtml = (html = "") => html.replace(/<[^>]+>/g, "");
+const dict = getDictionary(locale);
   return (
     <motion.div
       initial={{ opacity: 0, y: 35 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.12 }}
-      className="group relative min-h-[430px] overflow-hidden rounded-2xl border border-[#0D2749]"
+      className="group relative min-h-[340px] overflow-hidden rounded-2xl border border-[#0D2749]"
     >
       <Image
         src={article.image}
@@ -28,16 +31,16 @@ export default function ArticleDetails({ article, index , locale }) {
           {article.title}
         </h3>
 
-        <p className="mb-5 text-custom14 leading-7 text-[#95AAC7]">
-          {article.description}
+        <p className="mb-5 text-custom14 line-clamp-2 leading-7 text-[#95AAC7]">
+           {stripHtml(article.content)}
         </p>
 
         <Link
            href={`/${locale}/articles/${article.id}`}
           className="inline-flex items-center gap-2 text-secondary"
         >
-          اقرأ المقال
-          <FaArrowLeft />
+          {dict?.articles?.readMore}
+          {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
         </Link>
       </div>
     </motion.div>

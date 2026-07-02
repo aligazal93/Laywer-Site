@@ -1,9 +1,16 @@
 "use client";
 
+import ErrorState from "@/app/components/ErrorState";
+import LoadingCard from "@/app/components/LoadingCard";
+import { useAbout } from "@/hooks/useAbout";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function MyWord({ locale }) {
+    const { data, isLoading, error } = useAbout(locale);
+    if (isLoading) return <LoadingCard />;
+    if (error) return <ErrorState />;
+    const aboutData = data?.about || {};
   return (
     <section className="relative py-10 lg:py-20 bg-[url('/images/intro-5.png')] bg-cover bg-center">
       <div className="absolute inset-0 bg-primary/25" />
@@ -26,7 +33,7 @@ export default function MyWord({ locale }) {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="mx-auto w-full lg:w-[50%] text-[34px] font-bold leading-[1.9] text-white md:text-[52px]"
         >
-          الثقة تُبنى بالفعل قبل القول، والعدالة تُنال بالصبر قبل الحكم.
+          {aboutData?.quote || ""}
         </motion.h2>
 
         <motion.p
@@ -36,7 +43,7 @@ export default function MyWord({ locale }) {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="mt-8 text-custom24 font-[700] text-secondary"
         >
-          علي سعيد الشامسي
+          {aboutData?.name || ""}
         </motion.p>
       </div>
     </section>

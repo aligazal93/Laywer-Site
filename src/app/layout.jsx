@@ -1,3 +1,4 @@
+import TanstackProvider from "@/providers/TanstackProvider";
 import "./globals.css";
 import localFont from "next/font/local";
 
@@ -25,7 +26,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html className={ibmPlexArabic.variable}>
-      <body className="font-sans bg-[#000511]">{children}</body>
+      <body className="font-sans bg-[#000511]">
+        <TanstackProvider>{children}</TanstackProvider>
+      </body>
     </html>
   );
 }

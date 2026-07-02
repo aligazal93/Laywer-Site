@@ -18,7 +18,7 @@ export default function PracticeCard({ item, index }) {
     >
       <Image
         src={item.image}
-        alt={item.title}
+        alt={item.name}
         fill
         className="object-cover transition duration-700 group-hover:scale-105"
       />
@@ -27,18 +27,18 @@ export default function PracticeCard({ item, index }) {
       <div className="relative z-10 flex h-full min-h-[260px] flex-col justify-center px-9 text-start">
         <Image
           src={item.icon}
-          alt=""
+          alt={item.name}
           width={44}
           height={44}
           className="mb-3 h-15 w-15 object-cover"
         />
 
         <h3 className="mb-2 text-custom24 font-[700] text-white">
-          {item.title}
+          {item.name}
         </h3>
 
         <p className="lg:max-w-[350px] w-full overflow-hidden line-clamp-2 text-custom14 leading-[34px] text-[#95AAC7]">
-          {item.text}
+          {item.content}
         </p>
       </div>
     </motion.div>

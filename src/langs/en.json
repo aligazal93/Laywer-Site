@@ -4,11 +4,79 @@
         "about": "About",
         "articles": "Articles",
         "contact": "Contact",
-        "book": "Book Consultation",
+        "termsConditions": "Terms and Conditions",
+        "privacyPolicy": "Privacy Policy",
+        "book": "Book Your Consultation",
         "language": "العربية"
     },
     "hero": {
         "title": "Ali Saeed Al Shamsi",
-        "subtitle": "Your legal partner in making confident decisions."
+        "subtitle": "Your trusted legal partner for confident decisions.",
+        "GetKnowMme": "Get to Know Me"
+    },
+    "about": {
+        "title": "An Approach Built on Trust and Clarity",
+        "description": "I believe that every case is unique and deserves careful attention. The best legal solutions begin with listening, thorough analysis, and understanding the client's objectives before providing legal advice or taking any action. My commitment is to deliver legal consultations and services based on expertise, transparency, and professionalism, ensuring the best possible outcomes within the framework of the law."
+    },
+    "practice": {
+        "title": "Areas of Legal Practice",
+        "subtitle": "Providing specialized legal services across key areas of practice."
+    },
+    "services": {
+        "title": "Areas of Legal Practice",
+        "description": "Every case deserves careful consideration, and every legal decision begins with a clear strategy."
+    },
+    "articles": {
+        "title": "Legal Insights",
+        "subtitle": "Legal analysis and perspectives to help you make informed decisions.",
+        "viewAll": "View All Articles",
+        "readMore": "Read Article",
+        "all": "All",
+        "needConsultation": "Do You Need a Consultation?",
+        "canConsulationNow": "You can book a consultation now to discuss your case and receive the legal guidance you need.",
+        "RelatedArticles": "Related Articles"
+    },
+    "cta": {
+        "title": "Start Your Legal Journey",
+        "description": "Because every legal decision matters, the best solutions begin with a clear conversation. If you're looking for legal advice based on careful understanding, clear insight, and professional commitment, book a consultation to discuss your case and receive the legal guidance you need.",
+        "button": "Contact Now"
+    },
+    "footer": {
+        "customerService": "Customer Service",
+        "siteSections": "Site Sections",
+        "contact": "Contact Us",
+        "followUsOn": "Follow Us On",
+        "copyright": "© 2026 Ali Saeed Al Shamsi. All Rights Reserved.",
+        "chooseContactUsMethod": "Choose a Contact Us Method",
+        "contactUsWhatsApp": "Contact Us via WhatsApp",
+        "RequestConsultation": "Request Consultation",
+        "close": "Close",
+        "loading": "Loading Data"
+    },
+    "contactSection": {
+        "badge": "Let's Talk",
+        "title": "Let's Discuss Your Legal Needs",
+        "description": "My name is Ali Saeed Al Shamsi, a lawyer and legal consultant. I believe that effective legal work begins with understanding the client's needs before searching for solutions. That's why I am committed to providing legal consultations and services that combine in-depth analysis, strategic insight, and the highest standards of professionalism and confidentiality."
+    },
+    "legalContent": {
+        "badge": "Legal Content",
+        "title": "Legal Articles, Written to Be Understood.",
+        "description": "Insights and articles on legal matters—written in a clear, straightforward style for those who seek understanding, not persuasion."
+    },
+    "contactForm": {
+        "badge": "Contact Me",
+        "title": "A Direct Conversation, No Middleman.",
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "subject": "Subject",
+        "message": "Message",
+        "messagePlaceholder": "Write the details of your project or inquiry here",
+        "helpTitle": "How Can We Help You?",
+        "fullNamePlaceholder": "Enter your full name",
+        "followUs": "Follow Us on Social Media",
+        "sendButton": "Send Message",
+        "sending": "Sending..."
     }
+
 }

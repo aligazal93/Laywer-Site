@@ -4,8 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useHome } from "@/hooks/useHome";
+import LoadingCard from "./LoadingCard";
+import ErrorState from "./ErrorState";
+import { getDictionary } from "@/lib/getDictionary";
 
 export default function Intro({ locale }) {
+  const { data, isLoading, error } = useHome(locale);
+  const dict = getDictionary(locale);
+
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorState />;
   const isArabic = locale === "ar";
 
   const contentVariants = {
@@ -67,13 +76,13 @@ export default function Intro({ locale }) {
         {/* <div className="absolute inset-0 bg-gradient-to-b from-[primary]/5 via-[primary]/5 to-[primary]/10" /> */}
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1200px] items-center px-6 pt-24">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1200px] items-center px-6 pt-32">
         <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <motion.div
             variants={contentVariants}
             initial="hidden"
             animate="visible"
-            className="order-2 text-center lg:order-1 lg:text-right"
+            className="order-2 text-center lg:order-1 lg:text-start"
           >
             <motion.span
               variants={itemVariants}
@@ -113,7 +122,7 @@ export default function Intro({ locale }) {
                 href={`/${locale}/contact`}
                 className="flex items-center gap-2 rounded-full bg-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-[#b98f45]"
               >
-                احجز استشارتك الآن{" "}
+                {dict.header.book}
                 {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
               </Link>
 
@@ -121,7 +130,7 @@ export default function Intro({ locale }) {
                 href="#about"
                 className="rounded-full border-2 border-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-secondary hover:text-white"
               >
-                تعرّف عليّ
+               {dict.hero.GetKnowMme}
               </Link>
             </motion.div>
           </motion.div>

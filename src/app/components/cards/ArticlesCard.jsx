@@ -11,6 +11,11 @@ export default function ArticleCard({
   locale,
 }) {
   const isArabic = locale === "ar";
+
+  const stripHtml = (html) => {
+    return html.replace(/<[^>]+>/g, "");
+  };
+
   return (
     <motion.button
       type="button"
@@ -29,11 +34,11 @@ export default function ArticleCard({
         {article.title}
       </h3>
 
-      <p className="mb-2 text-custom16 leading-7 text-white/50">
-        {article.description}
+      <p className="mb-0 line-clamp-2 text-custom16 leading-7 text-white/50">
+        {stripHtml(article.content)}
       </p>
 
-      <span className="inline-flex items-center gap-2 text-custom16 font-[700] text-secondary">
+      {/* <span className="inline-flex items-center gap-2 text-custom16 font-[700] text-secondary">
         اقرأ المقال
         <FaArrowLeft
           size={22}
@@ -41,7 +46,7 @@ export default function ArticleCard({
             isArabic ? "rotate-0" : "rotate-180"
           }`}
         />
-      </span>
+      </span> */}
     </motion.button>
   );
 }

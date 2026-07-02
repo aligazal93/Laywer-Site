@@ -1,0 +1,20 @@
+# Ali Saeed Al Shamsi
+
+> Official website of lawyer Ali Saeed Al Shamsi. The website provides legal consultations, legal services, articles, and contact information in Arabic and English.
+
+## Main Pages
+
+- [Arabic Home](https://laywer-site-pi.vercel.app/ar)
+- [Arabic About](https://laywer-site-pi.vercel.app/ar/about-us)
+- [Arabic Articles](https://laywer-site-pi.vercel.app/ar/articles)
+- [Arabic Contact](https://laywer-site-pi.vercel.app/ar/contact)
+
+- [English Home](https://laywer-site-pi.vercel.app/en)
+- [English About](https://laywer-site-pi.vercel.app/en/about-us)
+- [English Articles](https://laywer-site-pi.vercel.app/en/articles)
+- [English Contact](https://laywer-site-pi.vercel.app/en/contact)
+
+## Legal
+
+- [Privacy Policy](https://laywer-site-pi.vercel.app/ar/privacy-policy)
+- [Terms and Conditions](https://laywer-site-pi.vercel.app/ar/terms-conditions)

@@ -13,7 +13,7 @@ export default async function HomePage({ params }) {
     <>
       <Intro locale={locale} />
       <ValuesSection locale={locale} />
-      <AboutSection locale={locale} />
+      {/* <AboutSection locale={locale} /> */}
       <PracticeAreas locale={locale} />
       <LegalProcess locale={locale} />
       <ArticlesSection locale={locale} />

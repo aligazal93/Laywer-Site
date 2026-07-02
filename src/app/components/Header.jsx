@@ -13,10 +13,10 @@ export default function Header({ locale }) {
   const isArabic = locale === "ar";
 
   const navLinks = [
-    { title: "الرئيسية  ", href: `/${locale}/` },
-    { title: "نبذة عني", href: `/${locale}/about-us` },
-    { title: "المقالات", href: `/${locale}/articles` },
-    { title: "تواصل معي", href: `/${locale}/contact` },
+    { title: dict.header.home, href: `/${locale}/` },
+    { title: dict.header.about, href: `/${locale}/about-us` },
+    { title: dict.header.articles, href: `/${locale}/articles` },
+    { title: dict.header.contact, href: `/${locale}/contact` },
   ];
 
   useEffect(() => {
@@ -52,7 +52,13 @@ export default function Header({ locale }) {
           }`}
         >
           <Link href="/" className="text-white text-lg font-semibold">
-          اللـوجـو
+            <Image
+              src="/images/logo-1.png"
+              alt="logo"
+              width={70}
+              height={20}
+              className=" object-cover"
+            />
           </Link>
 
           <div className="flex items-center gap-4">
@@ -75,7 +81,7 @@ export default function Header({ locale }) {
                 href={`/${locale}/contact`}
                 className="bg-secondary px-6 py-3 rounded-[14px] text-custom14 font-[700] text-white transition hover:bg-[#b98f45]"
               >
-                احجز استشارتك الآن
+                {dict.header.book}
               </Link>
 
               <button
@@ -101,7 +107,15 @@ export default function Header({ locale }) {
             : "-translate-x-full"
         }`}
       >
-        <Link href={`/${locale}`}>اللـوجـو</Link>
+        <Link href={`/${locale}`}>
+          <Image
+            src="/images/logo-1.png"
+            alt="logo"
+            width={100}
+            height={50}
+            className="w-[100px] h-[50px]"
+          />
+        </Link>
 
         <ul className="mt-[40px]">
           {navLinks.map((item) => (

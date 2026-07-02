@@ -1,9 +1,13 @@
 "use client";
 
+import { useSendEmail } from "@/hooks/useSendContact";
+import { getDictionary } from "@/lib/getDictionary";
 import { useState } from "react";
+import { toast } from "sonner";
 
-export default function ContactForm() {
-  const [loading, setLoading] = useState(false);
+export default function ContactForm({ locale }) {
+  const dict = getDictionary(locale);
+  const { mutate, isPending } = useSendEmail();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -20,37 +24,34 @@ export default function ContactForm() {
     }));
   };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-//     try {
-//       setLoading(true);
+    mutate(formData, {
+      onSuccess: (res) => {
+        toast.success(res?.message || "تم إرسال الرسالة بنجاح");
 
-//       const response = await api.post("/contact-us", formData);
-
-//       toast.success(response?.data?.message || "تم إرسال الرسالة بنجاح");
-
-//       setFormData({
-//         name: "",
-//         email: "",
-//         phone: "",
-//         subject: "",
-//         message: "",
-//       });
-//     } catch (error) {
-//       toast.error(
-//         error?.response?.data?.message || "حدث خطأ أثناء الإرسال"
-//       );
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      },
+      onError: (error) => {
+        toast.error(
+          error?.response?.data?.message || "حدث خطأ أثناء إرسال الرسالة"
+        );
+      },
+    });
+  };
 
   return (
-    <form className="space-y-5 text-right">
+    <form onSubmit={handleSubmit} className="space-y-5 text-start">
       <div>
         <label className="mb-2 block text-custom16 font-bold text-white">
-          الاسم بالكامل *
+          {dict.contactForm.fullName}
         </label>
 
         <input
@@ -59,14 +60,14 @@ export default function ContactForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          placeholder="ادخل الاسم بالكامل"
-          className="h-[52px] w-full rounded-xl  bg-[#131C31] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          placeholder={dict.contactForm.fullNamePlaceholder}
+          className="h-[52px] w-full rounded-xl bg-[#131C31] px-4 text-custom14 text-white outline-none"
         />
       </div>
 
       <div>
         <label className="mb-2 block text-custom16 font-bold text-white">
-          البريد الإلكتروني *
+          {dict.contactForm.email}
         </label>
 
         <input
@@ -76,44 +77,46 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           placeholder="name@example.com"
-          className="h-[52px] w-full rounded-xl bg-[#131C31] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="h-[52px] w-full rounded-xl bg-[#131C31] px-4 text-custom14 text-white outline-none"
         />
       </div>
 
       <div>
         <label className="mb-2 block text-custom16 font-bold text-white">
-          رقم الهاتف
+          {dict.contactForm.phone}
         </label>
 
         <input
           dir="ltr"
           type="tel"
           name="phone"
+          required
           value={formData.phone}
           onChange={handleChange}
           placeholder="+966 500000000"
-          className="h-[52px] w-full rounded-xl  bg-[#131C31] px-4 text-right text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="h-[52px] w-full rounded-xl bg-[#131C31] px-4 text-start text-custom14 text-white outline-none"
         />
       </div>
 
       <div>
         <label className="mb-2 block text-custom16 font-bold text-white">
-          الموضوع
+          {dict.contactForm.subject}
         </label>
 
         <input
           type="text"
           name="subject"
+          required
           value={formData.subject}
           onChange={handleChange}
-          placeholder="كيف يمكننا مساعدتك"
-          className="h-[52px] w-full rounded-xl  bg-[#131C31] px-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          placeholder={dict.contactForm.messagePlaceholder}
+          className="h-[52px] w-full rounded-xl bg-[#131C31] px-4 text-custom14 text-white outline-none"
         />
       </div>
 
       <div>
         <label className="mb-2 block text-custom16 font-bold text-white">
-          الرسالة
+          {dict.contactForm.message}
         </label>
 
         <textarea
@@ -122,17 +125,16 @@ export default function ContactForm() {
           required
           value={formData.message}
           onChange={handleChange}
-          placeholder="اكتب تفاصيل مشروعك أو استفسارك هنا"
-          className="w-full resize-none rounded-xl  bg-[#131C31] px-4 py-4 text-custom14 outline-none transition-all duration-300 focus:border-primary"
+          className="w-full resize-none rounded-xl bg-[#131C31] px-4 py-4 text-custom14 text-white outline-none"
         />
       </div>
 
       <button
         type="submit"
-        disabled={loading}
-        className="flex h-[54px] w-full items-center justify-center rounded-xl bg-secondary text-custom14 font-bold text-white transition-all duration-300 hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-70"
+        disabled={isPending}
+        className="flex h-[54px] w-full items-center justify-center rounded-xl bg-secondary text-custom14 font-bold text-white transition-all duration-300 hover:bg-secondary/90 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {loading ? "جاري الإرسال..." : "إرسال الرسالة"}
+        {isPending ? dict.contactForm.sending : dict.contactForm.sendButton}
       </button>
     </form>
   );

@@ -4,8 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useAbout } from "@/hooks/useAbout";
+import LoadingCard from "@/app/components/LoadingCard";
+import ErrorState from "@/app/components/ErrorState";
 
 export default function AboutHero({ locale }) {
+  const { data, isLoading, error } = useAbout(locale);
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorState />;
+  const aboutData = data?.about || {};
   const isArabic = locale === "ar";
   return (
     <section className="relative min-h-screen mb-[20px] overflow-hidden  pt-28">
@@ -26,7 +33,7 @@ export default function AboutHero({ locale }) {
           transition={{ duration: 0.7 }}
           className="mb-4 text-custom28 font-[700] text-white md:text-custom28"
         >
-          المحامي والمستشار القانوني
+          {aboutData?.job_title || ""}
         </motion.p>
 
         <motion.h1
@@ -35,7 +42,7 @@ export default function AboutHero({ locale }) {
           transition={{ duration: 0.9, delay: 0.1 }}
           className="pointer-events-none absolute top-[155px] z-0 whitespace-nowrap text-[32px] font-bold leading-none text-secondary  md:text-[92px] lg:text-[100px]"
         >
-          علي سعيــــــــــــــــــــــــــــــــــــــــــد الشامسـي
+          {aboutData?.name || ""}
         </motion.h1>
 
         <div className="relative z-10 mt-8 grid w-full grid-cols-1 items-end gap-8 lg:grid-cols-12">
@@ -43,14 +50,10 @@ export default function AboutHero({ locale }) {
             initial={{ opacity: 0, x: -45 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.25 }}
-            className="order-3 text-center lg:col-span-3 lg:pb-24 lg:text-right"
+            className="text-center lg:col-span-4 lg:pb-24 lg:text-start"
           >
-            <p className="text-custom18 leading-8 text-white/85">
-              القانون في عالم اليوم لم يعد خياراً جانبياً، بل أداة استراتيجية
-              لحماية المصالح وبناء قرارات واضحة وسط تحديات ومتغيرات. أعمل مع كل
-              عميل كأن قضيته الشخصية، وأمنحه كل عناية مستحقة من رؤية ومتابعة
-              دقيقة للسرية والمصداقية المطلقة، وإيماناً بأن خدمة موكلي هي جوهر
-              النزاهة ومساري المهني.
+            <p className="text-custom14 line-clamp-6   leading-8 text-white/85">
+              {aboutData?.right_text || ""}
             </p>
           </motion.div>
 
@@ -58,10 +61,10 @@ export default function AboutHero({ locale }) {
             initial={{ opacity: 0, y: 45, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="order-1 flex justify-center lg:order-2 lg:col-span-6"
+            className="flex justify-center  lg:col-span-4"
           >
             <Image
-              src="/images/person-2.png"
+              src={aboutData?.main_image || ""}
               alt="علي سعيد الشامسي"
               width={560}
               height={680}
@@ -74,12 +77,10 @@ export default function AboutHero({ locale }) {
             initial={{ opacity: 0, x: 45 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.25 }}
-            className="order-2 text-center lg:order-1 lg:col-span-3 lg:pb-2 lg:text-start"
+            className="text-center lg:col-span-4 lg:pb-2 lg:text-start"
           >
-            <p className="text-custom18 leading-8 text-white/85">
-              أؤمن أن القانون ليس مجرد نصوص تقرأ، بل هو درع يحمي الحقوق، وبوصلة
-              تقود إلى العدالة. منذ أكثر من عقدين من الزمن، وأنا أرافق عملائي في
-              أدق قضاياهم، واضعاً كل خبرتي ومهنتي في خدمتهم بثبات وثقة وأمان.
+            <p className="text-custom14 leading-8 line-clamp-6  text-white/85">
+              {aboutData?.left_text || ""}
             </p>
           </motion.div>
         </div>
