@@ -65,11 +65,11 @@ export default function Header({ locale }) {
             <nav className="sm:hidden hidden items-center gap-8 md:flex mx-8">
               {navLinks.map((link) => (
                 <Link
-                  key={link.title}
+                  key={link?.title}
                   href={link.href}
                   className="text-sm text-white/85 transition font-[700] hover:text-[#D3AA60]"
                 >
-                  {link.title}
+                  {link?.title}
                 </Link>
               ))}
             </nav>
@@ -125,7 +125,7 @@ export default function Header({ locale }) {
                 onClick={() => setOpen(false)}
                 className="text-custom14 block my-4 font-[400] transition-all duration-500 hover:text-secondary text-white"
               >
-                {item.title}
+                {item?.title}
               </Link>
             </li>
           ))}

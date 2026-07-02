@@ -111,7 +111,7 @@ export default function Footer({ locale }) {
                     href={link.href}
                     className="text-custom14 text-white/85 transition hover:text-secondary"
                   >
-                    {link.title}
+                    {link?.title}
                   </Link>
                 </li>
               ))}

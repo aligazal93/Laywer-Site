@@ -78,7 +78,7 @@ export default function TermsConditionsPage() {
                 className="rounded-[22px] border border-[#0D2749] bg-[#00091F] p-6"
               >
                 <h2 className="mb-3 text-custom20 font-bold text-white">
-                  {index + 1}. {item.title}
+                  {index + 1}. {item?.title}
                 </h2>
 
                 <p className="text-custom14 leading-8 text-[#95AAC7]">

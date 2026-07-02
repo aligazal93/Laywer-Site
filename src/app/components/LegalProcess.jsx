@@ -89,7 +89,7 @@ export default function LegalProcess({ locale }) {
                   </span>
 
                   <h3 className="mb-4 text-[22px] font-bold text-white md:text-custom28">
-                    {step.title}
+                    {step?.title}
                   </h3>
 
                   <p className="w-full leading-7 text-[#95AAC7] text-custom16">

@@ -33,7 +33,7 @@ export default function FeaturedArticleCard({ article, locale }) {
 
         <div className="absolute bottom-0 right-0 p-10 text-start">
           <h3 className="mb-5 text-custom24 font-bold text-white">
-            {article.title}
+            {article?.title}
           </h3>
 
           <p className="mb-6 leading-8 line-clamp-3 text-white/70">

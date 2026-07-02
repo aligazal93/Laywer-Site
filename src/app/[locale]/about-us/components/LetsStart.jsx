@@ -46,7 +46,7 @@ export default function LetsStart({ locale }) {
           </span>
 
           <h2 className="mb-8  text-[32px] font-bold leading-[1.6] text-white md:text-[42px] lg:ml-auto">
-            {dict.contactSection.title}
+            {dict.contactSection?.title}
           </h2>
 
           <div className="space-y-5 text-custom18 leading-relaxed text-[#95AAC7]">

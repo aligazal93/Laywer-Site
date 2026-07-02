@@ -49,7 +49,7 @@ export default function ArticlesTabs({ categories = [], locale }) {
                   : "border-[#263B58] bg-transparent text-white hover:border-secondary hover:text-secondary"
               }`}
             >
-              {tab.title}
+              {tab?.title}
             </button>
           ))}
         </div>

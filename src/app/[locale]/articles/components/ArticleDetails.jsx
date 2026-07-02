@@ -29,7 +29,7 @@ console.log("IMAGE DEBUG:", article?.image);
 
       <div className="absolute bottom-0 right-0 z-10 p-8 text-right">
         <h3 className="mb-4 text-custom22 font-bold text-white">
-          {article.title}
+          {article?.title}
         </h3>
 
         <p className="mb-5 text-custom14 line-clamp-2 leading-7 text-[#95AAC7]">

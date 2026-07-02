@@ -31,7 +31,7 @@ export default function ArticleCard({
       }`}
     >
       <h3 className="mb-2 text-custom18 font-bold text-white">
-        {article.title}
+        {article?.title}
       </h3>
 
       <p className="mb-0 line-clamp-2 text-custom16 leading-7 text-white/50">

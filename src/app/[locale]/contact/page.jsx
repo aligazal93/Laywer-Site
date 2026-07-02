@@ -15,7 +15,7 @@ export default async function ContactUs({ params }) {
           </span>
 
           <h1 className="text-[34px] font-bold text-white md:text-[44px]">
-            {dict.contactForm.title}
+            {dict.contactForm?.title}
           </h1>
         </div>
 

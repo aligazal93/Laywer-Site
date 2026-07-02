@@ -42,7 +42,7 @@ export default function ArticleDetailsPage() {
             </span>
 
             <h1 className="mx-auto w-full text-custom32 font-[700] leading-relaxed text-white">
-              {article.title}
+              {article?.title}
             </h1>
           </div>
 
@@ -62,7 +62,7 @@ export default function ArticleDetailsPage() {
 
           <article className="col-span-12 text-start lg:col-span-9">
             <h1 className="mb-2 text-custom20 font-bold leading-relaxed text-white md:text-custom36">
-              {article.title}
+              {article?.title}
             </h1>
 
             <div
