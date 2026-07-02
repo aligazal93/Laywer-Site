@@ -11,7 +11,6 @@ import { getDictionary } from "@/lib/getDictionary";
 
 export default function ArticleDetailsPage() {
   const { locale = "ar", id } = useParams();
-
   const dict = getDictionary(locale);
 
   const { data, isLoading, error, refetch } = useTopicDetails(id, locale);
