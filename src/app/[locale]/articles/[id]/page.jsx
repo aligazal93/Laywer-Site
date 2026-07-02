@@ -25,7 +25,7 @@ export default function ArticleDetailsPage() {
   if (!article) {
     return (
       <section className="bg-primary py-[200px] text-center text-white">
-        المقال غير موجود
+        المقال غير متوفر 
       </section>
     );
   }
