@@ -72,7 +72,7 @@ export default function ArticleDetailsPage() {
                 [&_h2]:mb-5 [&_h2]:mt-8 [&_h2]:text-custom24 [&_h2]:font-bold [&_h2]:text-white
                 [&_p]:mb-6 [&_p]:leading-9
               `}
-              dangerouslySetInnerHTML={{ __html: article.content }}
+              dangerouslySetInnerHTML={{ __html: article?.content || "" }}
             />
           </article>
 

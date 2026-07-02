@@ -37,7 +37,7 @@ export default function FeaturedArticleCard({ article, locale }) {
           </h3>
 
           <p className="mb-6 leading-8 line-clamp-3 text-white/70">
-            {stripHtml(article.content)}
+            {stripHtml(article?.content || "")}
           </p>
 
           <Link href="#" className="inline-flex items-center gap-2 text-secondary">

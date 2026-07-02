@@ -93,7 +93,7 @@ export default function LegalProcess({ locale }) {
                   </h3>
 
                   <p className="w-full leading-7 text-[#95AAC7] text-custom16">
-                    {step.content}
+                    {step?.content || ""}
                   </p>
                 </motion.div>
               ))}

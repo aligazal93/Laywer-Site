@@ -33,7 +33,7 @@ console.log("IMAGE DEBUG:", article?.image);
         </h3>
 
         <p className="mb-5 text-custom14 line-clamp-2 leading-7 text-[#95AAC7]">
-           {stripHtml(article.content)}
+           {stripHtml(article?.content || "")}
         </p>
 
         <Link

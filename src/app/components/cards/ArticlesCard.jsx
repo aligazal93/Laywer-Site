@@ -35,7 +35,7 @@ export default function ArticleCard({
       </h3>
 
       <p className="mb-0 line-clamp-2 text-custom16 leading-7 text-white/50">
-        {stripHtml(article.content)}
+        {stripHtml(article?.content)}
       </p>
 
       {/* <span className="inline-flex items-center gap-2 text-custom16 font-[700] text-secondary">
