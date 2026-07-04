@@ -15,6 +15,7 @@ import ErrorState from "./ErrorState";
 import { getDictionary } from "@/lib/getDictionary";
 
 export default function Footer({ locale }) {
+  const { data, isLoading, error } = useHome(locale);
   const dict = getDictionary(locale);
 
   const footerLinks = [
@@ -27,11 +28,11 @@ export default function Footer({ locale }) {
   const isArabic = locale === "ar";
   const [open, setOpen] = useState(false);
 
-  const { data, isLoading, error } = useHome();
-  const informations = data?.informations || [];
   if (isLoading) return <LoadingCard />;
   if (error) return <ErrorState />;
 
+  const informations = data?.informations || {};
+  const whatsappPhone = informations?.phone?.replace(/\D/g, "");
   const socialLinks = [
     { icon: FaFacebookF, href: informations?.facebook || "#" },
     { icon: FaInstagram, href: informations?.instagram || "#" },
@@ -39,7 +40,6 @@ export default function Footer({ locale }) {
     { icon: FaSnapchat, href: informations?.snapchat || "#" },
     { icon: FaTiktok, href: informations?.tiktok || "#" },
   ];
-
   return (
     <footer className="relative bg-[#00091F] mt-[0px] pt-[200px] text-white">
       <div className="mx-auto max-w-[1200px] px-6">
@@ -71,7 +71,7 @@ export default function Footer({ locale }) {
           </h2>
 
           <Link
-            href={`${locale}/contact`}
+            href={`/${locale}/contact`}
             className="w-[250px] mx-auto items-center rounded-full block bg-[#07111F] px-8 py-3 text-custom16 font-semibold text-white transition duration-300 hover:bg-[#0D1B30] my-2"
           >
             {dict?.cta?.button}
@@ -80,27 +80,20 @@ export default function Footer({ locale }) {
 
         <div className="grid grid-cols-1 pt-10 gap-10 border-b border-white/10 pb-10 lg:grid-cols-4">
           <div className="text-center lg:text-start mt-[50px] lg:mt-[0px]">
-            <Link
-              href="/"
-              className="text-custom28 block mb-2 font-bold text-white"
-            >
+            {informations?.logo && (
               <Image
-                src={informations?.logo || ""}
-                alt={informations?.logo_alt || ""}
+                src={informations.logo}
+                alt="logo"
                 width={100}
                 height={100}
                 priority
                 sizes="120px"
                 className="object-contain"
               />
-            </Link>
-
-            <div
-              className="w-full lg:w-auto text-custom12 leading-relaxed text-white/85"
-              dangerouslySetInnerHTML={{
-                __html: informations?.small_about || "",
-              }}
-            />
+            )}
+            <p className="mt-4 text-custom14 leading-7 text-white/75">
+              {informations?.small_about}
+            </p>
           </div>
 
           {/* Site Links */}
@@ -186,7 +179,7 @@ export default function Footer({ locale }) {
                 />{" "}
                 {informations?.address}
               </li>
-                            <li className="flex items-center text-custom12  lg:justify-start justify-center gap-2">
+              <li className="flex items-center text-custom12  lg:justify-start justify-center gap-2">
                 {" "}
                 <Image
                   src="/images/time.png"
@@ -218,22 +211,36 @@ export default function Footer({ locale }) {
 
         <div
           className={`fixed bottom-6 z-[999] flex flex-col gap-3 ${
-            isArabic ? "right-6" : "left-6"
+            isArabic ? "right-8" : "left-8"
           }`}
         >
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="group flex h-14 w-14 items-center justify-center rounded-full bg-primary transition-all duration-300 hover:scale-110"
-          >
-            <Image src="/images/f-1.png" alt="calling" width={28} height={28} />
-          </button>
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="
+    group relative flex h-16 w-16 items-center justify-center
+    rounded-full bg-[#25D366]
+    shadow-[0_10px_30px_rgba(37,211,102,0.45)]
+    transition-all duration-300
+    hover:scale-110
+  "
+>
+  <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
+
+  <Image
+    src="/images/whats.png"
+    alt="WhatsApp"
+    width={34}
+    height={34}
+    className="relative z-10"
+  />
+</button>
         </div>
 
         {open && (
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
             <div className="w-full max-w-[420px] rounded-[24px] border border-white/10 bg-[#07111F] p-6 text-center text-white shadow-2xl">
-              <h3 className="mb-3 text-custom22 font-bold">تواصل معنا</h3>
+              <h3 className="mb-3 text-custom22 font-bold"> {dict?.footer?.contact} </h3>
 
               <p className="mb-6 text-custom15 leading-7 text-white/70">
                 {dict?.footer?.chooseContactUsMethod}
@@ -241,7 +248,7 @@ export default function Footer({ locale }) {
 
               <div className="space-y-3">
                 <Link
-                  href={`https://wa.me/${informations?.phone}`}
+                  href={`https://wa.me/${whatsappPhone}`}
                   target="_blank"
                   className="block rounded-[12px] bg-[#25D366] px-6 py-3 text-custom16 font-semibold text-white"
                 >
