@@ -1,155 +1,95 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { useHome } from "@/hooks/useHome";
-import LoadingCard from "./LoadingCard";
-import ErrorState from "./ErrorState";
+import IntroMotion from "./IntroMotion";
 import { getDictionary } from "@/lib/getDictionary";
+import { getHomeApi } from "@/services/homeService";
 
-export default function Intro({ locale }) {
+export default async function Intro({ locale }) {
   const dict = getDictionary(locale);
-
   const isArabic = locale === "ar";
 
-  const contentVariants = {
-    hidden: {
-      opacity: 0,
-      y: 40,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-    },
-  };
-
-  const imageVariants = {
-    hidden: {
-      opacity: 0,
-      x: isArabic ? -60 : 60,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: {
-        duration: 1.5,
-        ease: [0.22, 1, 0.36, 1],
-        delay: 0.25,
-      },
-    },
-  };
+  const data = await getHomeApi(locale);
+  const slides = data?.slide || {};
 
   return (
-    <section className="relative min-h-screen overflow-hidden pb-0 bg-primary">
+    <section
+      id="home"
+      aria-label={slides?.title || dict?.header?.home}
+      className="relative min-h-screen overflow-hidden bg-primary pb-0"
+    >
       <div className="absolute inset-0">
         <Image
           src="/images/intro.png"
-          alt="مكتب محاماة"
+          alt=""
           fill
           priority
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-[#061321]/50" />
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-[primary]/5 via-[primary]/5 to-[primary]/10" /> */}
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[1200px] items-center px-6 pt-32">
         <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-2">
-          <motion.div
-            variants={contentVariants}
-            initial="hidden"
-            animate="visible"
+          <IntroMotion
+            isArabic={isArabic}
             className="order-2 text-center lg:order-1 lg:text-start"
           >
-            <motion.span
-              variants={itemVariants}
-              className="mb-5 inline-block rounded-full border border-[#D3AA60]/40 bg-[#BA8632]/10 px-5 py-2 text-custom18 text-[#D3AA60]"
-            >
-              المحامي والمستشار القانوني
-            </motion.span>
+            <span className="mb-5 inline-block rounded-full border border-[#D3AA60]/40 bg-[#BA8632]/10 px-5 py-2 text-custom18 text-[#D3AA60]">
+              {slides?.head_title}
+            </span>
 
-            <motion.h1
-              variants={itemVariants}
-              className="mb-5 font-[700] text-[#BA8632] md:text-custom44"
-            >
-              علي سعيد الشامسـي
-            </motion.h1>
+            <h1 className="mb-5 font-[700] text-[#BA8632] md:text-custom44">
+              {slides?.title}
+            </h1>
 
-            <motion.h2
-              variants={itemVariants}
-              className="mb-5 text-2xl font-[700] text-white md:text-custom30"
-            >
-              شريكك القانوني في اتخاذ القرارات بثقة.
-            </motion.h2>
+            <h2 className="mb-5 text-2xl font-[700] text-white md:text-custom30">
+              {slides?.sub_title}
+            </h2>
 
-            <motion.p
-              variants={itemVariants}
-              className="mx-auto mb-8 max-w-[620px] text-base leading-8 text-white/75 lg:mx-0"
-            >
-              أعمل مع الأفراد ورواد الأعمال والشركات لتقديم حلول قانونية واضحة،
-              واستراتيجيات مدروسة، واستشارات تُبنى على المعرفة، والخبرة،
-              والالتزام المهني.
-            </motion.p>
+            <p className="mx-auto mb-8 max-w-[620px] text-base leading-8 text-white/75 lg:mx-0">
+              {slides?.content}
+            </p>
 
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap justify-center gap-4 lg:justify-start"
-            >
+            <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
               <Link
                 href={`/${locale}/contact`}
+                aria-label={dict?.header?.book}
                 className="flex items-center gap-2 rounded-full bg-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-[#b98f45]"
               >
-                {dict.header.book}
-                {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
+                {dict?.header?.book}
+                {isArabic ? <FaArrowLeft aria-hidden /> : <FaArrowRight aria-hidden />}
               </Link>
 
               <Link
-                href="#about"
+                href={`/${locale}/about-us`}
                 className="rounded-full border-2 border-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-secondary hover:text-white"
               >
-               {dict.hero.GetKnowMme}
+                {dict?.hero?.GetKnowMme}
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </IntroMotion>
 
-          {/* Image */}
-          <motion.div
-            variants={imageVariants}
-            initial="hidden"
-            animate="visible"
+          <IntroMotion
+            isArabic={isArabic}
+            type="image"
             className="order-1 flex justify-center lg:justify-start"
           >
             <div className="relative h-[480px] w-[360px] md:h-[620px] md:w-[460px]">
-              <Image
-                src="/images/person.png"
-                alt="علي سعيد الشامسي"
-                width={660}
-                height={480}
-                priority
-                className="h-full object-contain object-bottom"
-              />
+              {slides?.image && (
+                <Image
+                  src={slides.image}
+                  alt={slides?.title || "Lawyer"}
+                  width={460}
+                  height={620}
+                  priority
+                  sizes="(max-width: 768px) 360px, 460px"
+                  className="h-full w-full object-contain object-bottom"
+                />
+              )}
             </div>
-          </motion.div>
+          </IntroMotion>
         </div>
       </div>
     </section>

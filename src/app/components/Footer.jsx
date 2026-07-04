@@ -70,12 +70,6 @@ export default function Footer({ locale }) {
             {dict?.cta?.description}
           </h2>
 
-          {/* <p className="mx-auto mb-4 max-w-[620px] text-custom16 leading-8 text-white/85">
-            إذا كنت تبحث عن استشارة قانونية تعتمد على الفهم الدقيق، والرؤية
-            الواضحة، والالتزام المهني، يمكنك حجز موعد لبدء مناقشة حالتك والحصول
-            على التوجيه القانوني المناسب.
-          </p> */}
-
           <Link
             href={`${locale}/contact`}
             className="w-[250px] mx-auto items-center rounded-full block bg-[#07111F] px-8 py-3 text-custom16 font-semibold text-white transition duration-300 hover:bg-[#0D1B30] my-2"
@@ -88,14 +82,25 @@ export default function Footer({ locale }) {
           <div className="text-center lg:text-start mt-[50px] lg:mt-[0px]">
             <Link
               href="/"
-              className="text-custom28 block mb-4 font-bold text-white"
+              className="text-custom28 block mb-2 font-bold text-white"
             >
-              اللـوجـو
+              <Image
+                src={informations?.logo || ""}
+                alt={informations?.logo_alt || ""}
+                width={100}
+                height={100}
+                priority
+                sizes="120px"
+                className="object-contain"
+              />
             </Link>
 
-            <p className="w-full lg:max-w-[300px] text-custom16 leading-7 text-white/85">
-              {informations?.small_about || ""}
-            </p>
+            <div
+              className="w-full lg:w-auto text-custom12 leading-relaxed text-white/85"
+              dangerouslySetInnerHTML={{
+                __html: informations?.small_about || "",
+              }}
+            />
           </div>
 
           {/* Site Links */}
@@ -171,7 +176,7 @@ export default function Footer({ locale }) {
                 />{" "}
                 {informations?.email}
               </li>
-              <li className="flex items-center  lg:justify-start justify-center gap-2">
+              <li className="flex items-center text-custom12  lg:justify-start justify-center gap-2">
                 {" "}
                 <Image
                   src="/images/f-3.png"
@@ -180,6 +185,16 @@ export default function Footer({ locale }) {
                   height={20}
                 />{" "}
                 {informations?.address}
+              </li>
+                            <li className="flex items-center text-custom12  lg:justify-start justify-center gap-2">
+                {" "}
+                <Image
+                  src="/images/time.png"
+                  alt="phone"
+                  width={20}
+                  height={20}
+                />{" "}
+                {informations?.working_hours}
               </li>
             </ul>
 
