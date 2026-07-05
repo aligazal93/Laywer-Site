@@ -19,19 +19,32 @@ const ibmPlexArabic = localFont({
 });
 
 export const metadata = {
-  title: "Ali Saeed Al Shamsi",
+  metadataBase: new URL("https://lawyer-front.test-my-projects.com"),
+
+  title: {
+    default: "Ali Saeed Al Shamsi",
+    template: "%s | Ali Saeed Al Shamsi",
+  },
+
   description:
     "Professional Lawyer and Legal Consultant in the UAE.",
+
   keywords: [
     "Lawyer",
     "Legal Consultant",
     "UAE Lawyer",
     "Abu Dhabi Lawyer",
   ],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
+
 export default function RootLayout({ children }) {
   return (
-    <html className={ibmPlexArabic.variable}>
+      <html lang="ar" className={ibmPlexArabic.variable}>
       <body className="font-sans bg-[#000511]">
         <TanstackProvider>{children}</TanstackProvider>
       </body>

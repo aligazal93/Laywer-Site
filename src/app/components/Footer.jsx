@@ -102,14 +102,12 @@ export default function Footer({ locale }) {
               {dict?.footer?.siteSections}
             </h3>
 
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {footerLinks.map((link, index) => (
                 <li key={index}>
                   <Link
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-custom12 text-white/85 transition hover:text-secondary"
+                    className="text-custom14 text-white/85 transition hover:text-secondary"
                   >
                     {link.title}
                   </Link>
@@ -151,7 +149,7 @@ export default function Footer({ locale }) {
               {dict?.footer?.contact}
             </h3>
 
-            <ul className="space-y-3 text-custom14 text-white/90">
+            <ul className="space-y-3 text-custom16 text-white/90">
               <li className="flex items-center lg:justify-start justify-center gap-2">
                 <Image
                   src="/images/f-1.png"
@@ -161,8 +159,7 @@ export default function Footer({ locale }) {
                 />{" "}
                 {informations?.phone}
               </li>
-              <li className="flex items-center  lg:justify-start justify-center gap-2">
-                {" "}
+              <li className="flex items-center text-custom14   lg:justify-start justify-center gap-2">
                 <Image
                   src="/images/f-2.png"
                   alt="phone"
@@ -171,7 +168,7 @@ export default function Footer({ locale }) {
                 />{" "}
                 {informations?.email}
               </li>
-              <li className="flex items-center text-custom12  lg:justify-start justify-center gap-2">
+              <li className="flex items-center text-custom14  lg:justify-start justify-center gap-2">
                 {" "}
                 <Image
                   src="/images/f-3.png"
@@ -181,7 +178,7 @@ export default function Footer({ locale }) {
                 />{" "}
                 {informations?.address}
               </li>
-              <li className="flex items-center text-custom12  lg:justify-start justify-center gap-2">
+              <li className="flex items-center text-custom14  lg:justify-start justify-center gap-2">
                 {" "}
                 <Image
                   src="/images/time.png"
@@ -193,7 +190,7 @@ export default function Footer({ locale }) {
               </li>
             </ul>
 
-            <h3 className="mb-4 mt-6 text-custom14 font-bold text-secondary">
+            <h3 className="mb-4 mt-6 text-custom16 font-bold text-secondary">
               {dict?.footer?.followUsOn}
             </h3>
 
@@ -281,7 +278,7 @@ export default function Footer({ locale }) {
         )}
 
         <p className="py-5 text-center text-custom14 text-white/75">
-          © 2026 {dict?.footer?.copyright}
+           {dict?.footer?.copyright}
         </p>
       </div>
     </footer>
