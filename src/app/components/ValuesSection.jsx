@@ -57,11 +57,11 @@ export default function ValuesSection({ locale }) {
                 className="relative px-8 text-center lg:border-r lg:border-secondary/20 first:lg:border-r-0"
               >
                 <Image
-                  src="/images/icon-1.png"
+                  src={item?.icon || ""}
                   alt={item?.title || "icon"}
                   width={40}
                   height={40}
-                  className="mx-auto mb-6 h-10 w-10 object-contain"
+                  className="mx-auto mb-6 h-10 w-10 object-cover"
                 />
 
                 <h3 className="mb-4 text-custom20 font-bold text-white">

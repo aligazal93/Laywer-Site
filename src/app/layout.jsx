@@ -19,10 +19,16 @@ const ibmPlexArabic = localFont({
 });
 
 export const metadata = {
-  title: "Lawyer Site",
-  description: "Lawyer Site Website",
+  title: "Ali Saeed Al Shamsi",
+  description:
+    "Professional Lawyer and Legal Consultant in the UAE.",
+  keywords: [
+    "Lawyer",
+    "Legal Consultant",
+    "UAE Lawyer",
+    "Abu Dhabi Lawyer",
+  ],
 };
-
 export default function RootLayout({ children }) {
   return (
     <html className={ibmPlexArabic.variable}>

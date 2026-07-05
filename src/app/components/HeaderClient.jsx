@@ -51,7 +51,7 @@ export default function HeaderClient({ locale, dict, info }) {
       >
         <div
           className={`mx-auto flex max-w-[1200px] items-center justify-between px-6 transition-all duration-500 ${
-            scrolled ? "py-4" : "py-6"
+            scrolled ? "py-0" : "py-0"
           }`}
         >
           <Link
@@ -59,14 +59,14 @@ export default function HeaderClient({ locale, dict, info }) {
             aria-label={
               isArabic ? "الذهاب إلى الصفحة الرئيسية" : "Go to homepage"
             }
-            className="relative block h-[70px] w-[120px]"
+            className="relative block h-[150px] w-[150px]"
           >
             <Image
               src={logoSrc}
               alt={logoAlt}
-              fill
+              width={250}
+              height={150}
               priority
-              sizes="120px"
               className="object-contain"
             />
           </Link>

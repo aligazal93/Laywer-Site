@@ -5,6 +5,7 @@ import MyCv from "./components/MyCv";
 import MyWord from "./components/MyWord";
 import LetsStart from "./components/LetsStart";
 
+
 export default async function AboutUsPage({ params }) {
   const { locale } = await params;
   return (

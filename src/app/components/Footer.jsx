@@ -62,11 +62,11 @@ export default function Footer({ locale }) {
     lg:py-8
   "
         >
-          <p className="mb-3 text-custom18 font-semibold text-white/80">
+          <h1 className="mb-3 text-custom18 font-semibold text-white/80">
             {dict?.cta?.title}
-          </p>
+          </h1>
 
-          <h2 className="mx-auto mb-2 max-w-[760px] text-custom22 line-clamp-3 font-bold leading-relaxed text-white lg:text-custom24">
+          <h2 className="mx-auto mb-4 max-w-[760px] text-custom22 line-clamp-3 font-bold leading-relaxed text-white lg:text-custom20">
             {dict?.cta?.description}
           </h2>
 
@@ -85,13 +85,13 @@ export default function Footer({ locale }) {
                 src={informations.logo}
                 alt="logo"
                 width={100}
-                height={100}
+                height={70}
                 priority
                 sizes="120px"
                 className="object-contain"
               />
             )}
-            <p className="mt-4 text-custom14 leading-7 text-white/75">
+            <p className="mt-2 text-custom12 leading-7 text-white/75">
               {informations?.small_about}
             </p>
           </div>
@@ -107,9 +107,11 @@ export default function Footer({ locale }) {
                 <li key={index}>
                   <Link
                     href={link.href}
-                    className="text-custom14 text-white/85 transition hover:text-secondary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-custom12 text-white/85 transition hover:text-secondary"
                   >
-                    {link?.title}
+                    {link.title}
                   </Link>
                 </li>
               ))}
@@ -214,33 +216,36 @@ export default function Footer({ locale }) {
             isArabic ? "right-8" : "left-8"
           }`}
         >
-<button
-  type="button"
-  onClick={() => setOpen(true)}
-  className="
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="
     group relative flex h-16 w-16 items-center justify-center
     rounded-full bg-[#25D366]
     shadow-[0_10px_30px_rgba(37,211,102,0.45)]
     transition-all duration-300
     hover:scale-110
   "
->
-  <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
+          >
+            <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
 
-  <Image
-    src="/images/whats.png"
-    alt="WhatsApp"
-    width={34}
-    height={34}
-    className="relative z-10"
-  />
-</button>
+            <Image
+              src="/images/whats.png"
+              alt="WhatsApp"
+              width={34}
+              height={34}
+              className="relative z-10"
+            />
+          </button>
         </div>
 
         {open && (
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
             <div className="w-full max-w-[420px] rounded-[24px] border border-white/10 bg-[#07111F] p-6 text-center text-white shadow-2xl">
-              <h3 className="mb-3 text-custom22 font-bold"> {dict?.footer?.contact} </h3>
+              <h3 className="mb-3 text-custom22 font-bold">
+                {" "}
+                {dict?.footer?.contact}{" "}
+              </h3>
 
               <p className="mb-6 text-custom15 leading-7 text-white/70">
                 {dict?.footer?.chooseContactUsMethod}

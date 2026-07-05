@@ -7,6 +7,7 @@ import LoadingCard from "@/app/components/LoadingCard";
 import ErrorState from "@/app/components/ErrorState";
 import { getDictionary } from "@/lib/getDictionary";
 
+
 export default function ArticlesPage() {
   const { locale = "ar" } = useParams();
 

@@ -40,7 +40,7 @@ export default function AboutHero({ locale }) {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.1 }}
-          className="pointer-events-none absolute top-[155px] z-0 whitespace-nowrap text-[32px] font-bold leading-none text-secondary  md:text-[92px] lg:text-[100px]"
+          className="lg:block hidden pointer-events-none absolute top-[155px] z-0 whitespace-nowrap text-[32px] font-bold leading-none text-secondary  md:text-[92px] lg:text-[100px]"
         >
           {aboutData?.name || ""}
         </motion.h1>
