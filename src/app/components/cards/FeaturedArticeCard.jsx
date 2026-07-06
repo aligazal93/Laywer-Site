@@ -40,7 +40,7 @@ export default function FeaturedArticleCard({ article, locale }) {
             {stripHtml(article?.content || "")}
           </p>
 
-          <Link href="#" className="inline-flex items-center gap-2 text-secondary">
+          <Link href={`${locale}/articles/${article?.id}`} className="inline-flex items-center gap-2 text-secondary">
             اقرأ المقال
             <FaArrowLeft size={22} className={`${isArabic ? "rotate-[0deg]" : "rotate-[180deg]"}`} />
           </Link>

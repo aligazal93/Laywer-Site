@@ -59,15 +59,16 @@ export default function HeaderClient({ locale, dict, info }) {
             aria-label={
               isArabic ? "الذهاب إلى الصفحة الرئيسية" : "Go to homepage"
             }
-            className="relative block h-[150px] w-[150px]"
+            className="relative block h-[90px] w-[150px]"
           >
             <Image
               src={logoSrc}
               alt={logoAlt}
-              width={250}
-              height={150}
-              priority
-              className="object-contain"
+              width={150}
+              height={90}
+              sizes="150px"
+              quality={60}
+              className="h-full w-full object-contain"
             />
           </Link>
 
