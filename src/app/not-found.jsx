@@ -4,10 +4,6 @@ export default function NotFound() {
   return (
     <section className="flex min-h-screen items-center justify-center bg-[#0F172A] px-6">
       <div className="mx-auto max-w-2xl text-center">
-        <span className="inline-block rounded-full bg-[#D4AF37]/10 px-4 py-2 text-sm font-semibold text-[#D4AF37]">
-          Error 404
-        </span>
-
         <h1 className="mt-6 text-7xl font-bold text-white md:text-8xl">
           404
         </h1>

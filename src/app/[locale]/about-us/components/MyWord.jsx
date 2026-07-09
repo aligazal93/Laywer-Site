@@ -31,7 +31,7 @@ export default function MyWord({ locale }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="mx-auto w-full lg:w-[50%] text-[34px] font-bold leading-[1.9] text-white md:text-[52px]"
+          className="mx-auto w-full lg:w-[70%] text-[20px] font-bold leading-[1.9] text-white md:text-[38px]"
         >
           {aboutData?.quote || ""}
         </motion.h2>

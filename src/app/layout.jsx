@@ -9,13 +9,10 @@ const ibmPlexArabic = localFont({
       weight: "500",
       style: "normal",
     },
-    {
-      path: "../../public/fonts/IBMPlexSansArabic-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
   ],
   variable: "--font-ibm-plex-arabic",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata = {
@@ -26,15 +23,9 @@ export const metadata = {
     template: "%s | Ali Saeed Al Shamsi",
   },
 
-  description:
-    "Professional Lawyer and Legal Consultant in the UAE.",
+  description: "Professional Lawyer and Legal Consultant in the UAE.",
 
-  keywords: [
-    "Lawyer",
-    "Legal Consultant",
-    "UAE Lawyer",
-    "Abu Dhabi Lawyer",
-  ],
+  keywords: ["Lawyer", "Legal Consultant", "UAE Lawyer", "Abu Dhabi Lawyer"],
 
   robots: {
     index: true,
@@ -44,7 +35,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-      <html lang="ar" className={ibmPlexArabic.variable}>
+    <html lang="ar" className={ibmPlexArabic.variable}>
       <body className="font-sans bg-[#000511]">
         <TanstackProvider>{children}</TanstackProvider>
       </body>

@@ -72,6 +72,7 @@ export default function Footer({ locale }) {
 
           <Link
             href={`/${locale}/contact`}
+            aria-label={dict?.footer?.RequestConsultation}
             className="w-[250px] mx-auto items-center rounded-full block bg-[#07111F] px-8 py-3 text-custom16 font-semibold text-white transition duration-300 hover:bg-[#0D1B30] my-2"
           >
             {dict?.cta?.button}
@@ -107,6 +108,7 @@ export default function Footer({ locale }) {
                 <li key={index}>
                   <Link
                     href={link.href}
+                    aria-label={link.title}
                     className="text-custom14 text-white/85 transition hover:text-secondary"
                   >
                     {link.title}
@@ -126,6 +128,7 @@ export default function Footer({ locale }) {
               <li>
                 <Link
                   href={`/${locale}/privacy-policy`}
+                  aria-label={dict?.header?.privacyPolicy}
                   className="text-custom14 text-white/85 transition hover:text-secondary"
                 >
                   {dict?.header?.privacyPolicy}
@@ -135,6 +138,7 @@ export default function Footer({ locale }) {
               <li>
                 <Link
                   href={`/${locale}/terms-conditions`}
+                  aria-label={dict?.header?.termsConditions}
                   className="text-custom14 text-white/85 transition hover:text-secondary"
                 >
                   {dict?.header?.termsConditions}
@@ -197,6 +201,7 @@ export default function Footer({ locale }) {
             <div className="flex justify-center gap-3 lg:justify-start">
               {socialLinks.map(({ icon: Icon, href }, index) => (
                 <Link
+                  aria-label={dict?.footer?.followUsOn}
                   key={index}
                   href={href}
                   className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white/5 text-secondary transition hover:bg-secondary hover:text-white"
@@ -251,6 +256,7 @@ export default function Footer({ locale }) {
               <div className="space-y-3">
                 <Link
                   href={`https://wa.me/${whatsappPhone}`}
+                  aria-label={dict?.footer?.contactUsWhatsApp}
                   target="_blank"
                   className="block rounded-[12px] bg-[#25D366] px-6 py-3 text-custom16 font-semibold text-white"
                 >
@@ -259,6 +265,7 @@ export default function Footer({ locale }) {
 
                 <Link
                   href={`/${locale}/contact`}
+                  aria-label={dict?.footer?.RequestConsultation}
                   onClick={() => setOpen(false)}
                   className="block rounded-[12px] bg-secondary px-6 py-3 text-custom16 font-semibold text-white"
                 >

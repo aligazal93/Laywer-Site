@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import IntroMotion from "./IntroMotion";
 import { getDictionary } from "@/lib/getDictionary";
 import { getHomeApi } from "@/services/homeService";
 
@@ -11,6 +9,7 @@ export default async function Intro({ locale }) {
 
   const data = await getHomeApi(locale);
   const slides = data?.slide || {};
+  const heroImage = slides?.image;
 
   return (
     <section
@@ -25,7 +24,7 @@ export default async function Intro({ locale }) {
           alt=""
           fill
           sizes="100vw"
-          quality={70}
+          quality={45}
           className="object-cover"
         />
         <div className="absolute inset-0 bg-[#061321]/60" />
@@ -33,11 +32,7 @@ export default async function Intro({ locale }) {
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[1200px] items-center px-6 py-24 lg:py-0">
         <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-2">
-
-          <IntroMotion
-            isArabic={isArabic}
-            className="lg:text-start"
-          >
+          <div className="lg:text-start animate-hero-content">
             {slides?.head_title && (
               <span className="mb-5 inline-block rounded-full border border-[#D3AA60]/40 bg-[#BA8632]/10 px-5 py-2 text-custom18 text-[#D3AA60]">
                 {slides.head_title}
@@ -65,42 +60,36 @@ export default async function Intro({ locale }) {
             <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
               <Link
                 href={`/${locale}/contact`}
+                prefetch={false}
                 aria-label={dict?.header?.book}
                 className="flex items-center gap-2 rounded-full bg-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-[#b98f45]"
               >
                 {dict?.header?.book}
-                {isArabic ? (
-                  <FaArrowLeft aria-hidden />
-                ) : (
-                  <FaArrowRight aria-hidden />
-                )}
+                <span aria-hidden="true">{isArabic ? "←" : "→"}</span>
               </Link>
 
               <Link
                 href={`/${locale}/about-us`}
+                prefetch={false}
+                aria-label={dict?.hero?.GetKnowMme}
                 className="rounded-full border-2 border-secondary px-7 py-3 text-sm font-medium text-white transition hover:bg-secondary hover:text-white"
               >
                 {dict?.hero?.GetKnowMme}
               </Link>
             </div>
-          </IntroMotion>
-
+          </div>
 
           <div className="relative mt-[50px] h-[360px] w-[280px] sm:h-[440px] sm:w-[340px] md:h-[560px] md:w-[420px] lg:mt-[150px] lg:h-[620px] lg:w-[460px]">
             <Image
-              src={slides.image}
-              alt={slides?.title || "Lawyer"}
+              src={heroImage}
+              alt={slides?.title || "علي سعيد الشامسي"}
               fill
-              priority
+              preload
               sizes="(max-width: 640px) 280px, (max-width: 768px) 340px, (max-width: 1024px) 420px, 460px"
               quality={75}
               className="object-contain object-bottom"
             />
           </div>
-
-
-
-
         </div>
       </div>
     </section>

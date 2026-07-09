@@ -81,6 +81,7 @@ export default function HeaderClient({ locale, dict, info }) {
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-label={link.title}
                   className="text-sm font-[700] text-white/85 transition hover:text-[#D3AA60]"
                 >
                   {link.title}
@@ -93,6 +94,7 @@ export default function HeaderClient({ locale, dict, info }) {
 
               <Link
                 href={`/${locale}/contact`}
+                aria-label={dict?.header?.book}
                 className="hidden rounded-[14px] bg-secondary px-6 py-3 text-custom14 font-[700] text-white transition hover:bg-[#b98f45] sm:inline-flex"
               >
                 {dict?.header?.book}
@@ -162,6 +164,7 @@ export default function HeaderClient({ locale, dict, info }) {
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
+                  aria-label={item.title}
                   className="my-4 block text-custom14 font-[500] text-white transition-all duration-300 hover:text-secondary"
                 >
                   {item.title}
@@ -173,6 +176,7 @@ export default function HeaderClient({ locale, dict, info }) {
 
         <Link
           href={`/${locale}/contact`}
+          aria-label={dict?.header?.book}
           onClick={() => setOpen(false)}
           className="mt-8 inline-flex w-full justify-center rounded-[14px] bg-secondary px-6 py-3 text-custom14 font-[700] text-white transition hover:bg-[#b98f45]"
         >
