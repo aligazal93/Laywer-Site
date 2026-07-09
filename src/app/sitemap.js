@@ -1,4 +1,4 @@
-const baseUrl = "https://lawyer-front.test-my-projects.com";
+const baseUrl = "https://alilaw.ae";
 
 export default function sitemap() {
     const locales = ["ar", "en"];

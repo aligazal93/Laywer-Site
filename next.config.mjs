@@ -3,7 +3,7 @@ const nextConfig = {
     images: {
         remotePatterns: [{
             protocol: "https",
-            hostname: "lawyer.test-my-projects.com",
+            hostname: "admin.alilaw.ae",
             pathname: "/storage/**",
         }, ],
         formats: ["image/avif", "image/webp"],
