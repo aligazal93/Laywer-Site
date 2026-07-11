@@ -23,7 +23,7 @@ export default async function Intro({ locale }) {
           src="/images/intro.png"
           alt=""
           fill
-          sizes="100vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           quality={45}
           className="object-cover"
         />
@@ -85,7 +85,7 @@ export default async function Intro({ locale }) {
               alt={slides?.title || "علي سعيد الشامسي"}
               fill
               preload
-              sizes="(max-width: 640px) 280px, (max-width: 768px) 340px, (max-width: 1024px) 420px, 460px"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               quality={75}
               className="object-contain object-bottom"
             />

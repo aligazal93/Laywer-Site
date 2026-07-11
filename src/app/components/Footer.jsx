@@ -88,7 +88,7 @@ export default function Footer({ locale }) {
                 width={100}
                 height={70}
                 priority
-                sizes="120px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-contain"
               />
             )}

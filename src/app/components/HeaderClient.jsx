@@ -66,9 +66,9 @@ export default function HeaderClient({ locale, dict, info }) {
               alt={logoAlt}
               width={150}
               height={90}
-              sizes="150px"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               quality={60}
-              className="h-full w-full object-contain"
+              className="h-[120px] w-full object-contain"
             />
           </Link>
 
@@ -139,7 +139,7 @@ export default function HeaderClient({ locale, dict, info }) {
               alt={logoAlt}
               width={120}
               height={56}
-              sizes="120px"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="h-full w-full object-contain"
             />
           </Link>

@@ -1,5 +1,6 @@
 import TanstackProvider from "@/providers/TanstackProvider";
 import "./globals.css";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 
 const ibmPlexArabic = localFont({
@@ -72,13 +73,13 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
-    description:
-      "Professional lawyer and legal consultant in the UAE.",
+    description: "Professional lawyer and legal consultant in the UAE.",
     images: ["/og-image.jpg"],
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    await headers();
   return (
     <html lang="ar" className={ibmPlexArabic.variable}>
       <body className="font-sans bg-[#000511]">
