@@ -1,47 +1,38 @@
-import { NextResponse } from "next/server";
+import {
+    NextResponse
+} from "next/server";
 
 function createContentSecurityPolicy(nonce) {
-  const isDevelopment = process.env.NODE_ENV === "development";
+    const isDevelopment = process.env.NODE_ENV === "development";
 
-  return `
+    return `
     default-src 'self';
 
     script-src
       'self'
       'nonce-${nonce}'
       'strict-dynamic'
-      ${isDevelopment ? "'unsafe-eval'" : ""}
-      https://www.googletagmanager.com
-      https://www.google-analytics.com;
+      ${isDevelopment ? "'unsafe-eval'" : ""};
+
+    script-src-attr 'none';
 
     style-src
       'self'
-      'unsafe-inline'
-      https://fonts.googleapis.com;
+      'unsafe-inline';
 
     img-src
       'self'
       data:
       blob:
-      https:
-      https://admin.alilaw.ae
-      https://www.google-analytics.com
-      https://www.googletagmanager.com
-      https://stats.g.doubleclick.net;
+      https://admin.alilaw.ae;
 
     font-src
       'self'
-      data:
-      https://fonts.gstatic.com;
+      data:;
 
     connect-src
       'self'
-      https://admin.alilaw.ae
-      https://www.google-analytics.com
-      https://analytics.google.com
-      https://region1.google-analytics.com
-      https://www.googletagmanager.com
-      https://stats.g.doubleclick.net;
+      https://admin.alilaw.ae;
 
     frame-src
       'self'
@@ -50,8 +41,7 @@ function createContentSecurityPolicy(nonce) {
 
     media-src
       'self'
-      blob:
-      https:;
+      blob:;
 
     worker-src
       'self'
@@ -60,99 +50,61 @@ function createContentSecurityPolicy(nonce) {
     manifest-src
       'self';
 
-    object-src
-      'none';
-
-    base-uri
-      'self';
-
-    form-action
-      'self';
-
-    frame-ancestors
-      'none';
-
-    script-src-attr
-      'none';
-
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
     upgrade-insecure-requests;
   `
-    .replace(/\s{2,}/g, " ")
-    .trim();
+        .replace(/\s{2,}/g, " ")
+        .trim();
 }
 
 export function proxy(request) {
-  const pathname = request.nextUrl.pathname;
+    const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
-  // إنشاء nonce مختلف وآمن لكل Request
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+    const contentSecurityPolicy =
+        createContentSecurityPolicy(nonce);
 
-  const contentSecurityPolicy =
-    createContentSecurityPolicy(nonce);
+    const requestHeaders = new Headers(request.headers);
 
-  // تمرير الـ nonce إلى Next.js حتى يضيفه إلى سكربتات الموقع
-  const requestHeaders = new Headers(request.headers);
-
-  requestHeaders.set("x-nonce", nonce);
-
-  requestHeaders.set(
-    "Content-Security-Policy",
-    contentSecurityPolicy
-  );
-
-  // تحويل الصفحة الرئيسية إلى النسخة العربية
-  if (pathname === "/") {
-    const redirectResponse = NextResponse.redirect(
-      new URL("/ar", request.url)
+    requestHeaders.set("x-nonce", nonce);
+    requestHeaders.set(
+        "Content-Security-Policy",
+        contentSecurityPolicy
     );
 
-    redirectResponse.headers.set(
-      "Content-Security-Policy",
-      contentSecurityPolicy
+    if (request.nextUrl.pathname === "/") {
+        const response = NextResponse.redirect(
+            new URL("/ar", request.url)
+        );
+
+        response.headers.set(
+            "Content-Security-Policy",
+            contentSecurityPolicy
+        );
+
+        return response;
+    }
+
+    const response = NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+    });
+
+    response.headers.set(
+        "Content-Security-Policy",
+        contentSecurityPolicy
     );
 
-    return redirectResponse;
-  }
-
-  const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
-
-  response.headers.set(
-    "Content-Security-Policy",
-    contentSecurityPolicy
-  );
-
-  return response;
+    return response;
 }
 
 export const config = {
-  matcher: [
-    {
-      /*
-       * تشغيل Proxy على صفحات الموقع فقط، مع استبعاد:
-       * API
-       * ملفات Next.js
-       * الصور والخطوط
-       * robots وsitemap
-       */
-      source:
-        "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|images|fonts|icons).*)",
-
-      // عدم تشغيل Proxy على طلبات Next Link Prefetch
-      missing: [
-        {
-          type: "header",
-          key: "next-router-prefetch",
-        },
-        {
-          type: "header",
-          key: "purpose",
-          value: "prefetch",
-        },
-      ],
-    },
-  ],
+    matcher: [
+        "/",
+        "/ar/:path*",
+        "/en/:path*",
+    ],
 };
