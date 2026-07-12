@@ -1,7 +1,9 @@
 import TanstackProvider from "@/providers/TanstackProvider";
 import "./globals.css";
+
 import { headers } from "next/headers";
 import localFont from "next/font/local";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const ibmPlexArabic = localFont({
   src: [
@@ -22,7 +24,8 @@ export const metadata = {
   metadataBase: new URL(siteUrl),
 
   title: {
-    default: "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
+    default:
+      "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
     template: "%s | Ali Saeed Al Shamsi",
   },
 
@@ -56,7 +59,8 @@ export const metadata = {
   openGraph: {
     type: "website",
     siteName: "Ali Saeed Al Shamsi",
-    title: "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
+    title:
+      "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
     description:
       "Professional lawyer and legal consultant in the UAE, providing legal consultations and legal services.",
     url: siteUrl,
@@ -72,18 +76,31 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
-    description: "Professional lawyer and legal consultant in the UAE.",
+    title:
+      "Ali Saeed Al Shamsi | Lawyer & Legal Consultant in UAE",
+    description:
+      "Professional lawyer and legal consultant in the UAE.",
     images: ["/og-image.jpg"],
   },
 };
 
 export default async function RootLayout({ children }) {
-    await headers();
+  const nonce = (await headers()).get("x-nonce") || undefined;
+
   return (
-    <html lang="ar" className={ibmPlexArabic.variable}>
+    <html
+      lang="ar"
+      className={ibmPlexArabic.variable}
+    >
       <body className="font-sans bg-[#000511]">
-        <TanstackProvider>{children}</TanstackProvider>
+        <TanstackProvider>
+          {children}
+        </TanstackProvider>
+
+        <GoogleTagManager
+          gtmId="GTM-TLNGV2RL"
+          nonce={nonce}
+        />
       </body>
     </html>
   );

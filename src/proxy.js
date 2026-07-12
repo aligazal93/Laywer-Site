@@ -1,110 +1,175 @@
-import {
-    NextResponse
-} from "next/server";
+import { NextResponse } from "next/server";
+
+const CSP_HEADER = "Content-Security-Policy";
 
 function createContentSecurityPolicy(nonce) {
-    const isDevelopment = process.env.NODE_ENV === "development";
+  const isDevelopment = process.env.NODE_ENV === "development";
 
-    return `
-    default-src 'self';
+  const directives = [
+    "default-src 'self'",
 
-    script-src
-      'self'
-      'nonce-${nonce}'
-      'strict-dynamic'
-      ${isDevelopment ? "'unsafe-eval'" : ""};
+    [
+      "script-src 'self'",
+      `'nonce-${nonce}'`,
+      "'strict-dynamic'",
 
-    script-src-attr 'none';
+      // React يحتاج unsafe-eval في Development فقط.
+      isDevelopment ? "'unsafe-eval'" : "",
 
-    style-src
-      'self'
-      'unsafe-inline';
+      // Fallback للمتصفحات القديمة ودعم Google Tag Manager.
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://*.google-analytics.com",
+    ]
+      .filter(Boolean)
+      .join(" "),
 
-    img-src
-      'self'
-      data:
-      blob:
-      https://admin.alilaw.ae;
+    // منع onclick وonerror وأي JavaScript داخل HTML attributes.
+    "script-src-attr 'none'",
 
-    font-src
-      'self'
-      data:;
+    // Next.js يضع nonce على style tags التي ينشئها.
+    [
+      "style-src 'self'",
+      isDevelopment ? "'unsafe-inline'" : `'nonce-${nonce}'`,
+    ].join(" "),
 
-    connect-src
-      'self'
-      https://admin.alilaw.ae;
+    /*
+     * مطلوب بسبب Framer Motion وأي عنصر يستخدم:
+     * style={{ ... }}
+     *
+     * هذا يسمح بخصائص CSS المضمنة فقط،
+     * ولا يسمح بتشغيل JavaScript داخلي.
+     */
+    "style-src-attr 'unsafe-inline'",
 
-    frame-src
-      'self'
-      https://www.google.com
-      https://maps.google.com;
+    [
+      "img-src 'self'",
+      "data:",
+      "blob:",
+      "https://admin.alilaw.ae",
+      "https://www.googletagmanager.com",
+      "https://*.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://*.google-analytics.com",
+    ].join(" "),
 
-    media-src
-      'self'
-      blob:;
+    "font-src 'self' data:",
 
-    worker-src
-      'self'
-      blob:;
+    [
+      "connect-src 'self'",
+      "https://admin.alilaw.ae",
+      "https://www.googletagmanager.com",
+      "https://*.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://*.google-analytics.com",
+      "https://analytics.google.com",
+      "https://*.analytics.google.com",
+      "https://www.google.com",
+    ].join(" "),
 
-    manifest-src
-      'self';
+    [
+      "frame-src 'self'",
+      "https://www.google.com",
+      "https://maps.google.com",
+      "https://www.googletagmanager.com",
+    ].join(" "),
 
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-    frame-ancestors 'none';
-    upgrade-insecure-requests;
-  `
-        .replace(/\s{2,}/g, " ")
-        .trim();
+    ["media-src 'self'", "blob:", "https://admin.alilaw.ae"].join(" "),
+
+    "worker-src 'self' blob:",
+    "manifest-src 'self'",
+
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    !isDevelopment ? "upgrade-insecure-requests" : "",
+  ];
+
+  return directives
+    .filter(Boolean)
+    .join("; ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function applySecurityHeaders(response, contentSecurityPolicy) {
+  /*
+   * هذه هي نسخة CSP التي تصل إلى المتصفح
+   * وإلى MDN Observatory.
+   */
+  response.headers.set(CSP_HEADER, contentSecurityPolicy);
+
+  response.headers.set(
+    "Strict-Transport-Security",
+    "max-age=31536000; includeSubDomains"
+  );
+
+  response.headers.set("X-Content-Type-Options", "nosniff");
+
+  response.headers.set("X-Frame-Options", "DENY");
+
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  );
+
+  response.headers.set("Cross-Origin-Resource-Policy", "same-site");
+
+  response.headers.set("X-DNS-Prefetch-Control", "on");
+
+  return response;
 }
 
 export function proxy(request) {
-    const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  /*
+   * توليد nonce مختلف مع كل Request.
+   */
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
-    const contentSecurityPolicy =
-        createContentSecurityPolicy(nonce);
+  const contentSecurityPolicy = createContentSecurityPolicy(nonce);
 
-    const requestHeaders = new Headers(request.headers);
+  const requestHeaders = new Headers(request.headers);
 
-    requestHeaders.set("x-nonce", nonce);
-    requestHeaders.set(
-        "Content-Security-Policy",
-        contentSecurityPolicy
-    );
+  /*
+   * نرسل nonce إلى Server Components
+   * حتى يمكن قراءته داخل layout.js.
+   */
+  requestHeaders.set("x-nonce", nonce);
 
-    if (request.nextUrl.pathname === "/") {
-        const response = NextResponse.redirect(
-            new URL("/ar", request.url)
-        );
+  /*
+   * هذه النسخة مطلوبة داخل الـRequest
+   * حتى يستخرج Next.js الـnonce ويضيفه
+   * إلى سكربتات Next.js وReact الداخلية.
+   */
+  requestHeaders.set(CSP_HEADER, contentSecurityPolicy);
 
-        response.headers.set(
-            "Content-Security-Policy",
-            contentSecurityPolicy
-        );
+  const { pathname } = request.nextUrl;
 
-        return response;
-    }
+  /*
+   * تحويل الصفحة الرئيسية إلى النسخة العربية.
+   */
+  if (pathname === "/") {
+    const redirectUrl = request.nextUrl.clone();
 
-    const response = NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
-    });
+    redirectUrl.pathname = "/ar";
 
-    response.headers.set(
-        "Content-Security-Policy",
-        contentSecurityPolicy
-    );
+    const redirectResponse = NextResponse.redirect(redirectUrl, 308);
 
-    return response;
+    return applySecurityHeaders(redirectResponse, contentSecurityPolicy);
+  }
+
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
+
+  return applySecurityHeaders(response, contentSecurityPolicy);
 }
 
 export const config = {
-    matcher: [
-        "/",
-        "/ar/:path*",
-        "/en/:path*",
-    ],
+  matcher: ["/", "/ar/:path*", "/en/:path*"],
 };
