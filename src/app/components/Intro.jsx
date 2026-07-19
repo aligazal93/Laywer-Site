@@ -17,13 +17,13 @@ export default async function Intro({ locale }) {
       aria-label={slides?.title || dict?.header?.home}
       className="relative min-h-screen overflow-hidden bg-primary"
     >
-      {/* Background */}
       <div className="absolute inset-0">
         <Image
           src="/images/intro.png"
           alt=""
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="eager"
           quality={45}
           className="object-cover"
         />
@@ -80,15 +80,18 @@ export default async function Intro({ locale }) {
           </div>
 
           <div className="relative mt-[50px] h-[360px] w-[280px] sm:h-[440px] sm:w-[340px] md:h-[560px] md:w-[420px] lg:mt-[150px] lg:h-[620px] lg:w-[460px]">
-            <Image
-              src={heroImage}
-              alt={slides?.title || "علي سعيد الشامسي"}
-              fill
-              preload
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              quality={75}
-              className="object-contain object-bottom"
-            />
+            {heroImage && (
+              <Image
+                src={heroImage}
+                alt={slides?.title || "علي سعيد الشامسي"}
+                fill
+                fetchPriority="high"
+                loading="eager"
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 340px, (max-width: 1024px) 420px, 460px"
+                quality={75}
+                className="object-contain object-bottom"
+              />
+            )}
           </div>
         </div>
       </div>
