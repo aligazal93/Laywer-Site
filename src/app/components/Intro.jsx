@@ -79,7 +79,7 @@ export default async function Intro({ locale }) {
             </div>
           </div>
 
-          <div className="relative mt-[50px] h-[360px] w-[280px] sm:h-[440px] sm:w-[340px] md:h-[560px] md:w-[420px] lg:mt-[150px] lg:h-[620px] lg:w-[460px]">
+          <div className="relative mx-auto mt-[50px] h-[360px] w-[280px] sm:h-[440px] sm:w-[340px] md:h-[560px] md:w-[420px] lg:mx-0 lg:mt-[150px] lg:h-[620px] lg:w-[460px]">
             {heroImage && (
               <Image
                 src={heroImage}

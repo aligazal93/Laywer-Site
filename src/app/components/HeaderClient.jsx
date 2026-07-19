@@ -37,22 +37,19 @@ export default function HeaderClient({ locale, dict, info }) {
     <>
       <div
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-[999998] bg-black/50 transition-all duration-300 lg:hidden ${
-          open ? "visible opacity-100" : "invisible opacity-0"
-        }`}
+        className={`fixed inset-0 z-[999998] bg-black/50 transition-all duration-300 lg:hidden ${open ? "visible opacity-100" : "invisible opacity-0"
+          }`}
       />
 
       <header
-        className={`start-0 top-0 z-50 w-full transition-all duration-500 ${
-          scrolled
-            ? "fixed bg-primary/80 shadow-[0_10px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl"
-            : "absolute bg-transparent"
-        }`}
+        className={`start-0 top-0 z-50 w-full transition-all duration-500 ${scrolled
+          ? "fixed bg-primary/80 shadow-[0_10px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl"
+          : "absolute bg-transparent"
+          }`}
       >
         <div
-          className={`mx-auto flex max-w-[1200px] items-center justify-between px-6 transition-all duration-500 ${
-            scrolled ? "py-0" : "py-0"
-          }`}
+          className={`mx-auto flex max-w-[1200px] items-center justify-between px-6 transition-all duration-500 ${scrolled ? "py-0" : "py-0"
+            }`}
         >
           <Link
             href={`/${locale}`}
@@ -66,9 +63,10 @@ export default function HeaderClient({ locale, dict, info }) {
               alt={logoAlt}
               width={150}
               height={90}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              sizes="150px"
               quality={60}
-              className="h-[120px] w-full object-contain"
+              loading="eager"
+              className="h-[90px] w-[150px] object-contain"
             />
           </Link>
 
@@ -115,15 +113,13 @@ export default function HeaderClient({ locale, dict, info }) {
       </header>
 
       <aside
-        className={`fixed top-0 z-[999999] h-full w-[80%] max-w-[320px] overflow-hidden bg-primary p-5 pt-[40px] text-white transition-transform duration-300 lg:hidden ${
-          isArabic ? "right-0" : "left-0"
-        } ${
-          open
+        className={`fixed top-0 z-[999999] h-full w-[80%] max-w-[320px] overflow-hidden bg-primary p-5 pt-[40px] text-white transition-transform duration-300 lg:hidden ${isArabic ? "right-0" : "left-0"
+          } ${open
             ? "translate-x-0"
             : isArabic
-            ? "translate-x-full"
-            : "-translate-x-full"
-        }`}
+              ? "translate-x-full"
+              : "-translate-x-full"
+          }`}
       >
         <div className="flex items-center justify-between">
           <Link
@@ -139,8 +135,9 @@ export default function HeaderClient({ locale, dict, info }) {
               alt={logoAlt}
               width={120}
               height={56}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="h-full w-full object-contain"
+              sizes="120px"
+              quality={60}
+              className="h-[56px] w-[120px] object-contain"
             />
           </Link>
 
