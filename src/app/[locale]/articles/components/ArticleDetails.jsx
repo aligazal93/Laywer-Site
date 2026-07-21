@@ -6,11 +6,30 @@ import { motion } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { getDictionary } from "@/lib/getDictionary";
 
-export default function ArticleDetails({ article, index , locale , }) {
+export default function ArticleDetails({
+  article,
+  index,
+  locale,
+}) {
   const isArabic = locale === "ar";
-const stripHtml = (html = "") => html.replace(/<[^>]+>/g, "");
-const dict = getDictionary(locale);
-console.log("IMAGE DEBUG:", article?.image);
+  const dict = getDictionary(locale);
+
+  const stripHtml = (html = "") => {
+    return html.replace(/<[^>]+>/g, "");
+  };
+
+  const createSlug = (title = "") => {
+    return String(title)
+      .trim()
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s-]/gu, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  };
+
+  const articleSlug = `${article?.id}-${createSlug(article?.title)}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 35 }}
@@ -32,16 +51,21 @@ console.log("IMAGE DEBUG:", article?.image);
           {article?.title}
         </h3>
 
-        <p className="mb-5 text-custom14 line-clamp-2 leading-7 text-[#95AAC7]">
-           {stripHtml(article?.content || "")}
+        <p className="mb-5 line-clamp-2 text-custom14 leading-7 text-[#95AAC7]">
+          {stripHtml(article?.content || "")}
         </p>
 
         <Link
-           href={`/${locale}/articles/${article?.id || ""}`}
+          href={`/${locale}/articles/${articleSlug}`}
           className="inline-flex items-center gap-2 text-secondary"
         >
           {dict?.articles?.readMore}
-          {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
+
+          {isArabic ? (
+            <FaArrowLeft />
+          ) : (
+            <FaArrowRight />
+          )}
         </Link>
       </div>
     </motion.div>

@@ -20,6 +20,9 @@ export default function ArticlesPage() {
   if (error) return <ErrorState />;
 
 
+  
+
+
   return (
     <section className="container py-[200px]">
       <div className="grid grid-cols-12">
