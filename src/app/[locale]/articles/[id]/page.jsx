@@ -1,6 +1,7 @@
 import ArticleDetailsClient from "./ArticleDetailsClient";
 
 const SITE_URL = "https://alilaw.ae";
+const API_URL = "https://admin.alilaw.ae/api/v1/";
 
 function stripHtml(html = "") {
   return html
@@ -11,20 +12,27 @@ function stripHtml(html = "") {
 
 async function getArticle(id, locale) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!id) return null;
 
-    if (!baseUrl || !id) return null;
-
-    const response = await fetch(`${baseUrl}topics/${id}`, {
+    const response = await fetch(`${API_URL}topics/${id}`, {
       headers: {
         lang: locale,
         "Accept-Language": locale,
         Accept: "application/json",
       },
-      next: { revalidate: 3600 },
+      next: {
+        revalidate: 3600,
+      },
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      console.error(
+        "Article API error:",
+        response.status,
+        response.statusText
+      );
+      return null;
+    }
 
     const data = await response.json();
 
@@ -39,7 +47,6 @@ export async function generateMetadata({ params }) {
   const { locale = "ar", id } = await params;
 
   const article = await getArticle(id, locale);
-
   const canonical = `${SITE_URL}/${locale}/articles/${id}`;
 
   if (!article) {
@@ -48,9 +55,11 @@ export async function generateMetadata({ params }) {
         locale === "ar"
           ? "المقالات القانونية | المحامي علي سعيد الشامسي"
           : "Legal Articles | Ali Saeed Al Shamsi",
+
       alternates: {
         canonical,
       },
+
       robots: {
         index: false,
         follow: true,
@@ -59,7 +68,7 @@ export async function generateMetadata({ params }) {
   }
 
   const description =
-    stripHtml(article.content).slice(0, 160) ||
+    stripHtml(article.content || "").slice(0, 160) ||
     (locale === "ar"
       ? "مقال قانوني للمحامي علي سعيد الشامسي."
       : "Legal article by Ali Saeed Al Shamsi.");
@@ -70,6 +79,7 @@ export async function generateMetadata({ params }) {
 
     alternates: {
       canonical,
+
       languages: {
         ar: `${SITE_URL}/ar/articles/${id}`,
         en: `${SITE_URL}/en/articles/${id}`,
@@ -86,10 +96,12 @@ export async function generateMetadata({ params }) {
       description,
       url: canonical,
       type: "article",
+
       siteName:
         locale === "ar"
           ? "المحامي علي سعيد الشامسي"
           : "Ali Saeed Al Shamsi",
+
       images: article.image
         ? [
             {
@@ -112,5 +124,10 @@ export async function generateMetadata({ params }) {
 export default async function ArticleDetailsPage({ params }) {
   const { locale = "ar", id } = await params;
 
-  return <ArticleDetailsClient id={id} locale={locale} />;
+  return (
+    <ArticleDetailsClient
+      id={id}
+      locale={locale}
+    />
+  );
 }
