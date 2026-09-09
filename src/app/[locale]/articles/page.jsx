@@ -3,6 +3,17 @@ import { getDictionary } from "@/lib/getDictionary";
 
 const API_URL = "https://admin.alilaw.ae/api/v1/";
 
+function createExcerpt(html = "", maxLength = 180) {
+  const text = html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return text.length > maxLength
+    ? `${text.slice(0, maxLength).trim()}...`
+    : text;
+}
+
 async function getArticlesData(locale) {
   try {
     const response = await fetch(`${API_URL}topics`, {
@@ -39,7 +50,16 @@ export default async function ArticlesPage({ params }) {
   const data = await getArticlesData(locale);
 
   const categories = data?.categories || [];
-  const articles = data?.topics || [];
+
+  // لا نمرر محتوى المقال الكامل إلى Client Components.
+  // نرسل فقط البيانات اللازمة لبطاقة المقال.
+  const articles = (data?.topics || []).map((article) => ({
+    id: article.id,
+    title: article.title,
+    image: article.image,
+    category: article.category,
+    content: createExcerpt(article.content || ""),
+  }));
 
   return (
     <section className="container py-[200px]">
