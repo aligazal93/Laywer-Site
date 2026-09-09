@@ -1,27 +1,45 @@
-"use client";
-import React from "react";
-import { useParams } from "next/navigation";
 import ArticlesTabs from "./components/ArticlesTabs";
-import { useTopics } from "@/hooks/useTopics";
-import LoadingCard from "@/app/components/LoadingCard";
-import ErrorState from "@/app/components/ErrorState";
 import { getDictionary } from "@/lib/getDictionary";
 
+const API_URL = "https://admin.alilaw.ae/api/v1/";
 
-export default function ArticlesPage() {
-  const { locale = "ar" } = useParams();
+async function getArticlesData(locale) {
+  try {
+    const response = await fetch(`${API_URL}topics`, {
+      headers: {
+        lang: locale,
+        "Accept-Language": locale,
+        Accept: "application/json",
+      },
+      next: {
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(
+        "Articles API error:",
+        response.status,
+        response.statusText
+      );
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Articles fetch error:", error);
+    return null;
+  }
+}
+
+export default async function ArticlesPage({ params }) {
+  const { locale = "ar" } = await params;
 
   const dict = getDictionary(locale);
+  const data = await getArticlesData(locale);
 
-  const { data, isLoading, error } = useTopics(locale);
   const categories = data?.categories || [];
-
-  if (isLoading) return <LoadingCard />;
-  if (error) return <ErrorState />;
-
-
-  
-
+  const articles = data?.topics || [];
 
   return (
     <section className="container py-[200px]">
@@ -41,7 +59,11 @@ export default function ArticlesPage() {
         </div>
 
         <div className="col-span-12">
-          <ArticlesTabs categories={categories} locale={locale} />
+          <ArticlesTabs
+            categories={categories}
+            articles={articles}
+            locale={locale}
+          />
         </div>
       </div>
     </section>
