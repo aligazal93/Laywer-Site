@@ -15,20 +15,8 @@ export default function ArticleDetails({
   const dict = getDictionary(locale);
 
   const stripHtml = (html = "") => {
-    return html.replace(/<[^>]+>/g, "");
+    return html.replace(/<[^>]*>/g, "");
   };
-
-  const createSlug = (title = "") => {
-    return String(title)
-      .trim()
-      .toLowerCase()
-      .replace(/[^\p{L}\p{N}\s-]/gu, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
-  };
-
-  const articleSlug = `${article?.id}-${createSlug(article?.title)}`;
 
   return (
     <motion.div
@@ -56,7 +44,7 @@ export default function ArticleDetails({
         </p>
 
         <Link
-          href={`/${locale}/articles/${articleSlug}`}
+          href={`/${locale}/articles/${article?.id}`}
           className="inline-flex items-center gap-2 text-secondary"
         >
           {dict?.articles?.readMore}
