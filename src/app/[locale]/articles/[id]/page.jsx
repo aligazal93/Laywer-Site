@@ -10,7 +10,7 @@ function stripHtml(html = "") {
     .trim();
 }
 
-async function getArticle(id, locale) {
+async function getArticleData(id, locale) {
   try {
     if (!id) return null;
 
@@ -34,9 +34,7 @@ async function getArticle(id, locale) {
       return null;
     }
 
-    const data = await response.json();
-
-    return data?.topic || null;
+    return await response.json();
   } catch (error) {
     console.error("Article fetch error:", error);
     return null;
@@ -46,7 +44,9 @@ async function getArticle(id, locale) {
 export async function generateMetadata({ params }) {
   const { locale = "ar", id } = await params;
 
-  const article = await getArticle(id, locale);
+  const data = await getArticleData(id, locale);
+  const article = data?.topic;
+
   const canonical = `${SITE_URL}/${locale}/articles/${id}`;
 
   if (!article) {
@@ -124,10 +124,17 @@ export async function generateMetadata({ params }) {
 export default async function ArticleDetailsPage({ params }) {
   const { locale = "ar", id } = await params;
 
+  const data = await getArticleData(id, locale);
+
+  const article = data?.topic || null;
+  const relatedArticles = data?.related_topics || [];
+
   return (
     <ArticleDetailsClient
       id={id}
       locale={locale}
+      article={article}
+      relatedArticles={relatedArticles}
     />
   );
 }
