@@ -3,21 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import MoreArticles from "../components/MoreArticles";
-import LoadingCard from "@/app/components/LoadingCard";
-import ErrorState from "@/app/components/ErrorState";
-import { useTopicDetails } from "@/hooks/useTopicsDetails";
 import { getDictionary } from "@/lib/getDictionary";
 
-export default function ArticleDetailsClient({ id, locale = "ar" }) {
+export default function ArticleDetailsClient({
+  locale = "ar",
+  article,
+  relatedArticles = [],
+}) {
   const dict = getDictionary(locale);
-
-  const { data, isLoading, error, refetch } = useTopicDetails(id, locale);
-
-  if (isLoading) return <LoadingCard />;
-  if (error) return <ErrorState onRetry={refetch} />;
-
-  const article = data?.topic;
-  const relatedArticles = data?.related_topics || [];
 
   if (!article) {
     return (
@@ -27,8 +20,8 @@ export default function ArticleDetailsClient({ id, locale = "ar" }) {
     );
   }
 
-  // نحافظ على H1 واحد فقط للعنوان الرئيسي للمقال.
-  // أي H1 قادم من محتوى لوحة الإدارة يتحول إلى H2.
+  // منع وجود H1 إضافي داخل محتوى المقال
+  // ليبقى عنوان المقال الرئيسي هو H1 الوحيد في الصفحة
   const safeArticleContent = (article.content || "")
     .replace(/<h1(\s[^>]*)?>/gi, "<h2$1>")
     .replace(/<\/h1>/gi, "</h2>");
