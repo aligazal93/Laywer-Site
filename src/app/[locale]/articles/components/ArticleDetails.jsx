@@ -14,8 +14,17 @@ export default function ArticleDetails({
   const isArabic = locale === "ar";
   const dict = getDictionary(locale);
 
-  const stripHtml = (html = "") => {
-    return html.replace(/<[^>]*>/g, "");
+  const getExcerpt = (html = "", maxLength = 180) => {
+    const text = html
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (text.length <= maxLength) {
+      return text;
+    }
+
+    return `${text.slice(0, maxLength).trim()}...`;
   };
 
   return (
@@ -40,7 +49,7 @@ export default function ArticleDetails({
         </h3>
 
         <p className="mb-5 line-clamp-2 text-custom14 leading-7 text-[#95AAC7]">
-          {stripHtml(article?.content || "")}
+          {getExcerpt(article?.content || "")}
         </p>
 
         <Link
@@ -49,11 +58,7 @@ export default function ArticleDetails({
         >
           {dict?.articles?.readMore}
 
-          {isArabic ? (
-            <FaArrowLeft />
-          ) : (
-            <FaArrowRight />
-          )}
+          {isArabic ? <FaArrowLeft /> : <FaArrowRight />}
         </Link>
       </div>
     </motion.div>
