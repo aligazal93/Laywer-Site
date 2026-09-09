@@ -27,6 +27,12 @@ export default function ArticleDetailsClient({ id, locale = "ar" }) {
     );
   }
 
+  // نحافظ على H1 واحد فقط للعنوان الرئيسي للمقال.
+  // أي H1 قادم من محتوى لوحة الإدارة يتحول إلى H2.
+  const safeArticleContent = (article.content || "")
+    .replace(/<h1(\s[^>]*)?>/gi, "<h2$1>")
+    .replace(/<\/h1>/gi, "</h2>");
+
   return (
     <main className="bg-primary">
       <section className="container py-[160px]">
@@ -37,7 +43,7 @@ export default function ArticleDetailsClient({ id, locale = "ar" }) {
             </span>
 
             <h1 className="mx-auto w-full text-custom32 font-[700] leading-relaxed text-white">
-              {article?.title}
+              {article.title}
             </h1>
           </div>
 
@@ -45,8 +51,8 @@ export default function ArticleDetailsClient({ id, locale = "ar" }) {
             <div className="relative my-[10px] overflow-hidden rounded-[24px]">
               <div className="relative mx-auto my-10 h-[300px] w-full overflow-hidden rounded-[28px] sm:h-[350px] lg:h-[500px] lg:w-[90%]">
                 <Image
-                  src={article?.image || "/images/icon-1.png"}
-                  alt={article?.title || "article"}
+                  src={article.image || "/images/icon-1.png"}
+                  alt={article.title || "article"}
                   fill
                   priority
                   className="object-fill object-center"
@@ -56,19 +62,20 @@ export default function ArticleDetailsClient({ id, locale = "ar" }) {
           </div>
 
           <article className="col-span-12 text-start lg:col-span-9">
-            <h1 className="mb-2 text-custom20 font-bold leading-relaxed text-white md:text-custom36">
-              {article?.title}
-            </h1>
+            <h2 className="mb-2 text-custom20 font-bold leading-relaxed text-white md:text-custom36">
+              {article.title}
+            </h2>
 
             <div
               className={`
                 article-content w-full lg:w-[80%]
                 text-custom16 leading-9 text-[#95AAC7]
                 [&_h2]:mb-5 [&_h2]:mt-8 [&_h2]:text-custom24 [&_h2]:font-bold [&_h2]:text-white
+                [&_h3]:mb-4 [&_h3]:mt-7 [&_h3]:text-custom20 [&_h3]:font-bold [&_h3]:text-white
                 [&_p]:mb-6 [&_p]:leading-9
               `}
               dangerouslySetInnerHTML={{
-                __html: article?.content || "",
+                __html: safeArticleContent,
               }}
             />
           </article>
