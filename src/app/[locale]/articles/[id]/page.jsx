@@ -1,105 +1,116 @@
-"use client";
+import ArticleDetailsClient from "./ArticleDetailsClient";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import MoreArticles from "../components/MoreArticles";
-import LoadingCard from "@/app/components/LoadingCard";
-import ErrorState from "@/app/components/ErrorState";
-import { useTopicDetails } from "@/hooks/useTopicsDetails";
-import { getDictionary } from "@/lib/getDictionary";
+const SITE_URL = "https://alilaw.ae";
 
-export default function ArticleDetailsPage() {
-  const { locale = "ar", id } = useParams();
-  const dict = getDictionary(locale);
+function stripHtml(html = "") {
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
-  const { data, isLoading, error, refetch } = useTopicDetails(id, locale);
+async function getArticle(id, locale) {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  if (isLoading) return <LoadingCard />;
-  if (error) return <ErrorState onRetry={refetch} />;
+    if (!baseUrl || !id) return null;
 
-  const article = data?.topic;
-  const relatedArticles = data?.related_topics || [];
-  const isArabic = locale === "ar";
+    const response = await fetch(`${baseUrl}topics/${id}`, {
+      headers: {
+        lang: locale,
+        "Accept-Language": locale,
+        Accept: "application/json",
+      },
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+
+    return data?.topic || null;
+  } catch (error) {
+    console.error("Article fetch error:", error);
+    return null;
+  }
+}
+
+export async function generateMetadata({ params }) {
+  const { locale = "ar", id } = await params;
+
+  const article = await getArticle(id, locale);
+
+  const canonical = `${SITE_URL}/${locale}/articles/${id}`;
 
   if (!article) {
-    return (
-      <section className="bg-primary py-[200px] text-center text-white">
-        المقال غير متوفر 
-      </section>
-    );
+    return {
+      title:
+        locale === "ar"
+          ? "المقالات القانونية | المحامي علي سعيد الشامسي"
+          : "Legal Articles | Ali Saeed Al Shamsi",
+      alternates: {
+        canonical,
+      },
+      robots: {
+        index: false,
+        follow: true,
+      },
+    };
   }
 
-  console.log("IMAGE DEBUG:", article?.image);
+  const description =
+    stripHtml(article.content).slice(0, 160) ||
+    (locale === "ar"
+      ? "مقال قانوني للمحامي علي سعيد الشامسي."
+      : "Legal article by Ali Saeed Al Shamsi.");
 
-  return (
-    <main className="bg-primary">
-      <section className="container py-[160px]">
-        <div className="grid grid-cols-12 gap-2">
-          <div className="col-span-12 text-center">
-            <span className="mb-2 inline-block px-6 py-3 text-custom14 font-[700] text-secondary">
-              {article.category?.title}
-            </span>
+  return {
+    title: article.title,
+    description,
 
-            <h1 className="mx-auto w-full text-custom32 font-[700] leading-relaxed text-white">
-              {article?.title}
-            </h1>
-          </div>
+    alternates: {
+      canonical,
+      languages: {
+        ar: `${SITE_URL}/ar/articles/${id}`,
+        en: `${SITE_URL}/en/articles/${id}`,
+      },
+    },
 
-          <div className="col-span-12">
-            <div className="relative my-[10px] overflow-hidden rounded-[24px]">
-              <div className="relative mx-auto my-10 h-[300px] w-full overflow-hidden rounded-[28px] sm:h-[350px] lg:h-[500px] lg:w-[90%]">
-                <Image
-                  src={article?.image || "/images/icon-1.png"}
-                  alt={article?.title || "article"}
-                  fill
-                  priority
-                  className="object-fill object-center"
-                />
-              </div>
-            </div>
-          </div>
+    robots: {
+      index: true,
+      follow: true,
+    },
 
-          <article className="col-span-12 text-start lg:col-span-9">
-            <h1 className="mb-2 text-custom20 font-bold leading-relaxed text-white md:text-custom36">
-              {article?.title}
-            </h1>
+    openGraph: {
+      title: article.title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName:
+        locale === "ar"
+          ? "المحامي علي سعيد الشامسي"
+          : "Ali Saeed Al Shamsi",
+      images: article.image
+        ? [
+            {
+              url: article.image,
+              alt: article.title,
+            },
+          ]
+        : [],
+    },
 
-            <div
-              className={`
-                article-content w-full lg:w-[80%]
-                text-custom16 leading-9 text-[#95AAC7]
-                [&_h2]:mb-5 [&_h2]:mt-8 [&_h2]:text-custom24 [&_h2]:font-bold [&_h2]:text-white
-                [&_p]:mb-6 [&_p]:leading-9
-              `}
-              dangerouslySetInnerHTML={{ __html: article?.content || "" }}
-            />
-          </article>
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description,
+      images: article.image ? [article.image] : [],
+    },
+  };
+}
 
-          <aside className="col-span-12 lg:col-span-3">
-            <div className="sticky top-[120px] rounded-[14px] bg-secondary p-6 text-center">
-              <h3 className="mb-2 text-custom18 font-bold text-white">
-               {dict?.articles?.needConsultation}
-              </h3>
+export default async function ArticleDetailsPage({ params }) {
+  const { locale = "ar", id } = await params;
 
-              <p className="mb-2 text-custom14 leading-6 text-white/80">
-                {dict?.articles?.canConsulationNow}  
-              </p>
-
-              <Link
-                href={`/${locale}#contact`}
-                className="inline-flex rounded-full bg-primary px-5 py-2 text-custom14 font-bold text-white transition-all duration-300 hover:bg-primary/80"
-              >
-               {dict?.header?.book}
-              </Link>
-            </div>
-          </aside>
-
-          <div className="col-span-12">
-            <MoreArticles locale={locale} articles={relatedArticles} />
-          </div>
-        </div>
-      </section>
-    </main>
-  );
+  return <ArticleDetailsClient id={id} locale={locale} />;
 }
