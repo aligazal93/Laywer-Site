@@ -5,7 +5,7 @@ const API_URL = "https://admin.alilaw.ae/api/v1/";
 
 function stripHtml(html = "") {
   return html
-    .replace(/<[^>]*>/g, " ")
+    .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -68,10 +68,12 @@ export async function generateMetadata({ params }) {
   }
 
   const description =
-    stripHtml(article.content || "").slice(0, 160) ||
-    (locale === "ar"
-      ? "مقال قانوني للمحامي علي سعيد الشامسي."
-      : "Legal article by Ali Saeed Al Shamsi.");
+    String(id) === "16" && locale === "ar"
+      ? "الفرق بين السب والقذف في القانون الإماراتي، مع توضيح تعريف السب وتعريف القذف والفروق القانونية بينهما والعقوبات المقررة والسب والقذف الإلكتروني."
+      : stripHtml(article.content || "").slice(0, 160) ||
+        (locale === "ar"
+          ? "مقال قانوني بقلم علي سعيد الشامسي."
+          : "Legal article by Ali Saeed Al Shamsi.");
 
   return {
     title: article.title,
@@ -79,7 +81,6 @@ export async function generateMetadata({ params }) {
 
     alternates: {
       canonical,
-
       languages: {
         ar: `${SITE_URL}/ar/articles/${id}`,
         en: `${SITE_URL}/en/articles/${id}`,
