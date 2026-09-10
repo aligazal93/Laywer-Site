@@ -20,8 +20,8 @@ export default function ArticleDetailsClient({
     );
   }
 
-  // منع وجود H1 إضافي داخل محتوى المقال
-  // ليبقى عنوان المقال الرئيسي هو H1 الوحيد في الصفحة
+  // إزالة أي H1 داخل محتوى المقال
+  // لأن عنوان الصفحة الرئيسي موجود بالفعل كـ H1
   const safeArticleContent = (article.content || "")
     .replace(/<h1(\s[^>]*)?>/gi, "<h2$1>")
     .replace(/<\/h1>/gi, "</h2>");
@@ -41,32 +41,26 @@ export default function ArticleDetailsClient({
           </div>
 
           <div className="col-span-12">
-            <div className="relative my-[10px] overflow-hidden rounded-[24px]">
-              <div className="relative mx-auto my-10 h-[300px] w-full overflow-hidden rounded-[28px] sm:h-[350px] lg:h-[500px] lg:w-[90%]">
-                <Image
-                  src={article.image || "/images/icon-1.png"}
-                  alt={article.title || "article"}
-                  fill
-                  priority
-                  className="object-fill object-center"
-                />
-              </div>
+            <div className="relative mx-auto my-10 h-[300px] w-full overflow-hidden rounded-[28px] sm:h-[350px] lg:h-[500px]">
+              <Image
+                src={article.image || "/images/icon-1.png"}
+                alt={article.title || "article"}
+                fill
+                priority
+                className="object-fill object-center"
+              />
             </div>
           </div>
 
           <article className="col-span-12 text-start lg:col-span-9">
-            <h2 className="mb-2 text-custom20 font-bold leading-relaxed text-white md:text-custom36">
-              {article.title}
-            </h2>
-
             <div
-              className={`
+              className="
                 article-content w-full lg:w-[80%]
-                text-custom16 leading-9 text-[#95AAC7]
-                [&_h2]:mb-5 [&_h2]:mt-8 [&_h2]:text-custom24 [&_h2]:font-bold [&_h2]:text-white
+                text-custom16 leading-9 text-[#95AA7C]
+                [&_h2]:mb-3 [&_h2]:mt-8 [&_h2]:text-custom24 [&_h2]:font-bold [&_h2]:text-white
                 [&_h3]:mb-4 [&_h3]:mt-7 [&_h3]:text-custom20 [&_h3]:font-bold [&_h3]:text-white
                 [&_p]:mb-6 [&_p]:leading-9
-              `}
+              "
               dangerouslySetInnerHTML={{
                 __html: safeArticleContent,
               }}
@@ -80,12 +74,12 @@ export default function ArticleDetailsClient({
               </h3>
 
               <p className="mb-2 text-custom14 leading-6 text-white/80">
-                {dict?.articles?.canConsulationNow}
+                {dict?.articles?.canConsultationNow}
               </p>
 
               <Link
-                href={`/${locale}#contact`}
-                className="inline-flex rounded-full bg-primary px-5 py-2 text-custom14 font-bold text-white transition-all duration-300 hover:bg-primary/80"
+                href={`/${locale}/contact`}
+                className="inline-flex rounded-full bg-primary px-5 py-2 text-custom14 font-bold text-white transition"
               >
                 {dict?.header?.book}
               </Link>
