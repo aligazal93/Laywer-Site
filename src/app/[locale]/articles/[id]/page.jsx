@@ -21,7 +21,7 @@ async function getArticleData(id, locale) {
         Accept: "application/json",
       },
       next: {
-        revalidate: 3600,
+        revalidate: 60,
       },
     });
 
