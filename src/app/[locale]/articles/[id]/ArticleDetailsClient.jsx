@@ -21,38 +21,69 @@ export default function ArticleDetailsClient({
   }
 
   /*
-   * SEO:
-   * - The page title below is the only H1.
-   * - Remove a duplicated title from the beginning of article.content
-   *   when the CMS has stored the article title inside the content.
-   * - Convert any remaining H1 tags inside the article body to H2.
+   * SEO rules:
+   *
+   * 1. article.title below is the ONLY H1 on the page.
+   *
+   * 2. Some articles coming from the CMS may contain the article title
+   *    again inside article.content as H1 or H2.
+   *
+   * 3. Remove ONLY the first H1/H2 whose text exactly matches
+   *    article.title, even if other HTML appears before it.
+   *
+   * 4. Convert any remaining H1 inside article.content to H2.
+   *
+   * This keeps the article heading structure safe without modifying
+   * legitimate H2/H3 headings inside the article.
    */
 
-  const normalizeText = (value = "") =>
+  const decodeBasicEntities = (value = "") =>
     value
-      .replace(/<[^>]*>/g, "")
       .replace(/&nbsp;/gi, " ")
+      .replace(/&#160;/gi, " ")
       .replace(/&amp;/gi, "&")
-      .replace(/&#39;/gi, "'")
       .replace(/&quot;/gi, '"')
+      .replace(/&#34;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/&apos;/gi, "'")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">");
+
+  const normalizeText = (value = "") =>
+    decodeBasicEntities(value)
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\u00a0/g, " ")
       .replace(/\s+/g, " ")
       .trim();
 
-  const removeDuplicatedTitle = (html = "", title = "") => {
+  const removeFirstMatchingTitleHeading = (html = "", title = "") => {
     if (!html || !title) return html;
 
     const normalizedTitle = normalizeText(title);
 
-    /*
-     * Check only the first heading in the article content.
-     * We do not remove headings elsewhere in the article.
-     */
+    if (!normalizedTitle) return html;
+
+    let matchingTitleRemoved = false;
+
     return html.replace(
-      /^(\s|&nbsp;|<p>\s*<\/p>|<p>(?:\s|&nbsp;)*<\/p>)*<(h1|h2)([^>]*)>([\s\S]*?)<\/\2>/i,
-      (fullMatch, prefix, tag, attributes, headingContent) => {
+      /<(h1|h2)\b([^>]*)>([\s\S]*?)<\/\1\s*>/gi,
+      (fullMatch, tagName, attributes, headingContent) => {
+        /*
+         * Once the duplicated title has been removed,
+         * leave every other H1/H2 untouched at this stage.
+         */
+        if (matchingTitleRemoved) {
+          return fullMatch;
+        }
+
         const normalizedHeading = normalizeText(headingContent);
 
+        /*
+         * Exact normalized-text comparison only.
+         * Similar headings are NOT removed.
+         */
         if (normalizedHeading === normalizedTitle) {
+          matchingTitleRemoved = true;
           return "";
         }
 
@@ -61,20 +92,24 @@ export default function ArticleDetailsClient({
     );
   };
 
-  let safeArticleContent = removeDuplicatedTitle(
+  /*
+   * Step 1:
+   * Remove the first duplicated H1/H2 matching article.title,
+   * regardless of HTML appearing before it.
+   */
+  let safeArticleContent = removeFirstMatchingTitleHeading(
     article.content || "",
     article.title || ""
   );
 
   /*
-   * Safety net:
-   * The article body must never introduce another H1.
-   * All body H1 elements become H2.
+   * Step 2:
+   * Safety net for SEO.
+   * No H1 is allowed inside the CMS article body.
+   * Any remaining body H1 becomes H2.
    */
   safeArticleContent = safeArticleContent
-    .replace(/<h1(\s[^>]*)?>/gi, (match, attributes = "") => {
-      return `<h2${attributes || ""}>`;
-    })
+    .replace(/<h1\b([^>]*)>/gi, "<h2$1>")
     .replace(/<\/h1\s*>/gi, "</h2>");
 
   return (
@@ -86,6 +121,7 @@ export default function ArticleDetailsClient({
               {article.category?.title}
             </span>
 
+            {/* The only H1 on the article page */}
             <h1 className="mx-auto w-full text-custom31 font-[700] leading-relaxed text-white">
               {article.title}
             </h1>
