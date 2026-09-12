@@ -21,69 +21,64 @@ export default function ArticleDetailsClient({
   }
 
   /*
-   * SEO rules:
-   *
-   * 1. article.title below is the ONLY H1 on the page.
-   *
-   * 2. Some articles coming from the CMS may contain the article title
-   *    again inside article.content as H1 or H2.
-   *
-   * 3. Remove ONLY the first H1/H2 whose text exactly matches
-   *    article.title, even if other HTML appears before it.
-   *
-   * 4. Convert any remaining H1 inside article.content to H2.
-   *
-   * This keeps the article heading structure safe without modifying
-   * legitimate H2/H3 headings inside the article.
+   * SEO:
+   * - article.title is the main H1.
+   * - Remove the first H1/H2 inside CMS content if it is the same
+   *   as article.title.
+   * - Ignore harmless spacing differences around punctuation.
+   * - Convert every remaining H1 inside CMS content to H2.
    */
 
   const decodeBasicEntities = (value = "") =>
     value
-      .replace(/&nbsp;/gi, " ")
-      .replace(/&#160;/gi, " ")
+      .replace(/&nbsp;|&#160;/gi, " ")
       .replace(/&amp;/gi, "&")
-      .replace(/&quot;/gi, '"')
-      .replace(/&#34;/gi, '"')
-      .replace(/&#39;/gi, "'")
-      .replace(/&apos;/gi, "'")
+      .replace(/&quot;|&#34;/gi, '"')
+      .replace(/&#39;|&apos;/gi, "'")
       .replace(/&lt;/gi, "<")
       .replace(/&gt;/gi, ">");
 
-  const normalizeText = (value = "") =>
+  const normalizeHeadingText = (value = "") =>
     decodeBasicEntities(value)
+      // Remove HTML tags inside headings
       .replace(/<[^>]*>/g, " ")
+
+      // Normalize non-breaking spaces
       .replace(/\u00a0/g, " ")
+
+      // Normalize spaces around Arabic and English punctuation
+      .replace(/\s*([:：،,؛;!?؟\-–—])\s*/g, "$1")
+
+      // Normalize remaining whitespace
       .replace(/\s+/g, " ")
+
       .trim();
 
-  const removeFirstMatchingTitleHeading = (html = "", title = "") => {
-    if (!html || !title) return html;
+  const removeDuplicatedArticleTitle = (html = "", title = "") => {
+    if (!html || !title) {
+      return html;
+    }
 
-    const normalizedTitle = normalizeText(title);
+    const normalizedTitle = normalizeHeadingText(title);
 
-    if (!normalizedTitle) return html;
+    if (!normalizedTitle) {
+      return html;
+    }
 
-    let matchingTitleRemoved = false;
+    let duplicateRemoved = false;
 
     return html.replace(
       /<(h1|h2)\b([^>]*)>([\s\S]*?)<\/\1\s*>/gi,
       (fullMatch, tagName, attributes, headingContent) => {
-        /*
-         * Once the duplicated title has been removed,
-         * leave every other H1/H2 untouched at this stage.
-         */
-        if (matchingTitleRemoved) {
+        if (duplicateRemoved) {
           return fullMatch;
         }
 
-        const normalizedHeading = normalizeText(headingContent);
+        const normalizedHeading =
+          normalizeHeadingText(headingContent);
 
-        /*
-         * Exact normalized-text comparison only.
-         * Similar headings are NOT removed.
-         */
         if (normalizedHeading === normalizedTitle) {
-          matchingTitleRemoved = true;
+          duplicateRemoved = true;
           return "";
         }
 
@@ -93,20 +88,18 @@ export default function ArticleDetailsClient({
   };
 
   /*
-   * Step 1:
-   * Remove the first duplicated H1/H2 matching article.title,
-   * regardless of HTML appearing before it.
+   * STEP 1:
+   * Remove the first duplicated article title from CMS content.
    */
-  let safeArticleContent = removeFirstMatchingTitleHeading(
+  let safeArticleContent = removeDuplicatedArticleTitle(
     article.content || "",
     article.title || ""
   );
 
   /*
-   * Step 2:
-   * Safety net for SEO.
-   * No H1 is allowed inside the CMS article body.
-   * Any remaining body H1 becomes H2.
+   * STEP 2:
+   * Prevent CMS content from creating another H1.
+   * Any remaining H1 becomes H2.
    */
   safeArticleContent = safeArticleContent
     .replace(/<h1\b([^>]*)>/gi, "<h2$1>")
@@ -116,12 +109,12 @@ export default function ArticleDetailsClient({
     <main className="bg-primary">
       <section className="container py-[160px]">
         <div className="grid grid-cols-12 gap-2">
+
           <div className="col-span-12 text-center">
             <span className="mb-2 inline-block px-6 py-3 text-custom14 font-[700] text-secondary">
               {article.category?.title}
             </span>
 
-            {/* The only H1 on the article page */}
             <h1 className="mx-auto w-full text-custom31 font-[700] leading-relaxed text-white">
               {article.title}
             </h1>
@@ -170,6 +163,7 @@ export default function ArticleDetailsClient({
 
           <aside className="col-span-12 lg:col-span-3">
             <div className="sticky top-[120px] rounded-[14px] bg-secondary p-6 text-center">
+
               <h3 className="mb-2 text-custom18 font-bold text-white">
                 {dict?.articles?.needConsultation}
               </h3>
@@ -184,6 +178,7 @@ export default function ArticleDetailsClient({
               >
                 {dict?.header?.book}
               </Link>
+
             </div>
           </aside>
 
@@ -193,6 +188,7 @@ export default function ArticleDetailsClient({
               articles={relatedArticles}
             />
           </div>
+
         </div>
       </section>
     </main>
