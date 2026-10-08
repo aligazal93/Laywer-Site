@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================
+   AliLaw - Global Styles
+   Preserve existing website design
+   ========================================= */
+
 /* Existing hero animation */
 .animate-hero-content {
     animation: heroFadeUp 0.7s ease-out both;
@@ -20,9 +25,13 @@
     }
 }
 
-/* Article tables */
+/* =========================================
+   Article Tables - Desktop & Mobile
+   ========================================= */
+
 .article-content table,
 .prose table {
+    display: table;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -55,8 +64,63 @@
     background-color: rgba(148, 163, 184, 0.08);
 }
 
-/* Mobile table layout */
+/* =========================================
+   Mobile Reading Improvements
+   ========================================= */
+
 @media (max-width: 640px) {
+
+    /* Article paragraphs */
+    .article-content p,
+    .prose p {
+        font-size: 17px;
+        line-height: 1.9;
+        letter-spacing: 0;
+        margin-bottom: 18px;
+        overflow-wrap: break-word;
+        color: #e2e8f0;
+    }
+
+    /* Article lists */
+    .article-content li,
+    .prose li {
+        font-size: 17px;
+        line-height: 1.85;
+        margin-bottom: 10px;
+        overflow-wrap: break-word;
+        color: #e2e8f0;
+    }
+
+    /* Section headings */
+    .article-content h2,
+    .prose h2 {
+        font-size: 23px;
+        line-height: 1.5;
+        font-weight: 700;
+        margin-top: 32px;
+        margin-bottom: 16px;
+        overflow-wrap: break-word;
+    }
+
+    /* Subheadings */
+    .article-content h3,
+    .prose h3 {
+        font-size: 20px;
+        line-height: 1.55;
+        font-weight: 700;
+        margin-top: 24px;
+        margin-bottom: 12px;
+        overflow-wrap: break-word;
+    }
+
+    /* Article links */
+    .article-content a,
+    .prose a {
+        text-underline-offset: 4px;
+        overflow-wrap: anywhere;
+    }
+
+    /* Responsive tables */
     .article-content table,
     .prose table {
         display: block;
@@ -64,17 +128,32 @@
         max-width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        font-size: 13px;
-        line-height: 1.7;
+        font-size: 14px;
+        line-height: 1.8;
     }
 
+    /* Table cells */
     .article-content th,
     .article-content td,
     .prose th,
     .prose td {
         min-width: 160px;
         padding: 12px;
+        line-height: 1.8;
         white-space: normal;
         overflow-wrap: anywhere;
+    }
+
+    /* Table headings */
+    .article-content th,
+    .prose th {
+        color: #ffffff;
+        background-color: #17324d;
+    }
+
+    /* Better table text contrast */
+    .article-content td,
+    .prose td {
+        color: #e2e8f0;
     }
 }
