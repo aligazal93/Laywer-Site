@@ -1,10 +1,11 @@
+
 import ArticleDetailsClient from "./ArticleDetailsClient";
 
 const SITE_URL = "https://alilaw.ae";
 const API_URL = "https://admin.alilaw.ae/api/v1/";
 
 function stripHtml(html = "") {
-  return html
+  return String(html)
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -67,13 +68,18 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const seoDescription = stripHtml(
+    article.seo_details?.meta_description || ""
+  );
+
   const description =
-    String(id) === "16" && locale === "ar"
+    seoDescription ||
+    (String(id) === "16" && locale === "ar"
       ? "الفرق بين السب والقذف في القانون الإماراتي، مع توضيح تعريف السب وتعريف القذف والفروق القانونية بينهما والعقوبات المقررة والسب والقذف الإلكتروني."
       : stripHtml(article.content || "").slice(0, 160) ||
         (locale === "ar"
           ? "مقال قانوني بقلم علي سعيد الشامسي."
-          : "Legal article by Ali Saeed Al Shamsi.");
+          : "Legal article by Ali Saeed Al Shamsi."));
 
   return {
     title: article.title,
