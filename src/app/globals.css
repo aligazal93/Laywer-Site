@@ -5,7 +5,7 @@
 
 /* =========================================
    AliLaw - Global Styles
-   Preserve existing website design
+   Dark Theme / Responsive Articles
    ========================================= */
 
 /* Existing hero animation */
@@ -26,7 +26,36 @@
 }
 
 /* =========================================
-   Article Tables - Desktop & Mobile
+   Article Content - Shared Rules
+   ========================================= */
+
+.article-content,
+.prose {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.article-content p,
+.prose p {
+    overflow-wrap: break-word;
+}
+
+.article-content a,
+.prose a {
+    text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+}
+
+.article-content img,
+.prose img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================================
+   Article Tables - All Screen Sizes
    ========================================= */
 
 .article-content table,
@@ -38,7 +67,6 @@
     margin: 24px 0;
     font-size: 15px;
     line-height: 1.8;
-    direction: rtl;
 }
 
 .article-content th,
@@ -47,7 +75,7 @@
 .prose td {
     border: 1px solid #64748b;
     padding: 14px;
-    text-align: right;
+    text-align: start;
     vertical-align: top;
     overflow-wrap: break-word;
 }
@@ -59,36 +87,51 @@
     font-weight: 700;
 }
 
+.article-content td,
+.prose td {
+    color: #e2e8f0;
+}
+
 .article-content tbody tr:nth-child(even),
 .prose tbody tr:nth-child(even) {
     background-color: rgba(148, 163, 184, 0.08);
 }
 
 /* =========================================
-   Mobile Reading Improvements
+   Mobile Reading - All Articles
    ========================================= */
 
 @media (max-width: 640px) {
 
-    /* Article paragraphs */
+    /* Article content width and spacing */
+    .article-content,
+    .prose {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding-inline: 12px;
+    }
+
+    /* Paragraphs */
     .article-content p,
     .prose p {
         font-size: 17px;
         line-height: 1.9;
         letter-spacing: 0;
-        margin-bottom: 18px;
-        overflow-wrap: break-word;
+        margin-bottom: 14px;
         color: #e2e8f0;
+        overflow-wrap: break-word;
     }
 
-    /* Article lists */
+    /* Lists */
     .article-content li,
     .prose li {
         font-size: 17px;
         line-height: 1.85;
         margin-bottom: 10px;
-        overflow-wrap: break-word;
         color: #e2e8f0;
+        overflow-wrap: break-word;
     }
 
     /* Section headings */
@@ -97,8 +140,8 @@
         font-size: 23px;
         line-height: 1.5;
         font-weight: 700;
-        margin-top: 32px;
-        margin-bottom: 16px;
+        margin-top: 28px;
+        margin-bottom: 14px;
         overflow-wrap: break-word;
     }
 
@@ -108,16 +151,16 @@
         font-size: 20px;
         line-height: 1.55;
         font-weight: 700;
-        margin-top: 24px;
+        margin-top: 22px;
         margin-bottom: 12px;
         overflow-wrap: break-word;
     }
 
-    /* Article links */
-    .article-content a,
-    .prose a {
-        text-underline-offset: 4px;
-        overflow-wrap: anywhere;
+    /* Article images */
+    .article-content img,
+    .prose img {
+        max-width: 100%;
+        height: auto;
     }
 
     /* Responsive tables */
@@ -151,7 +194,7 @@
         background-color: #17324d;
     }
 
-    /* Better table text contrast */
+    /* Table text */
     .article-content td,
     .prose td {
         color: #e2e8f0;
