@@ -1,7 +1,9 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Existing hero animation */
 .animate-hero-content {
     animation: heroFadeUp 0.7s ease-out both;
 }
@@ -15,5 +17,64 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Article tables */
+.article-content table,
+.prose table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+    line-height: 1.8;
+    direction: rtl;
+}
+
+.article-content th,
+.article-content td,
+.prose th,
+.prose td {
+    border: 1px solid #64748b;
+    padding: 14px;
+    text-align: right;
+    vertical-align: top;
+    overflow-wrap: break-word;
+}
+
+.article-content th,
+.prose th {
+    background-color: #17324d;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.article-content tbody tr:nth-child(even),
+.prose tbody tr:nth-child(even) {
+    background-color: rgba(148, 163, 184, 0.08);
+}
+
+/* Mobile table layout */
+@media (max-width: 640px) {
+    .article-content table,
+    .prose table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .article-content th,
+    .article-content td,
+    .prose th,
+    .prose td {
+        min-width: 160px;
+        padding: 12px;
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
 }
